@@ -7,6 +7,8 @@ import com.willy.malltest.repository.ProductSpecRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
 
@@ -17,10 +19,10 @@ public class ProductService {
     private ProductSpecRepository productSpecRepository;
 
 
-//
-//    public List<Product> getAllProducts() {
-//        return productRepository.findAll();
-//    }
+
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
 //
 //    public List<Product> getProductByCategoryID(String categoryID) {
 //        return productRepository.findByCategoryId(categoryID);
