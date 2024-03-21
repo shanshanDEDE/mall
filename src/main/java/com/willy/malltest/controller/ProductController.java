@@ -5,13 +5,10 @@ import com.willy.malltest.model.Category;
 import com.willy.malltest.model.Product;
 import com.willy.malltest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
-import java.util.List;
 
 @RestController
 public class ProductController {
@@ -19,24 +16,24 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/products/getAllProducts")
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
-    }
-
-    //    @GetMapping("/products/getProductByCategoryID")
+//    @GetMapping("/products/getAllProducts")
+//    public List<Product> getAllProducts() {
+//        return productService.getAllProducts();
+//    }
+//
+//        @GetMapping("/products/getProductByCategoryID")
 //    public List<Product> getProductByCategoryID(String categoryID) {
 //        return productService.getProductByCategoryID(categoryID);
 //    }
-    @GetMapping("/products/getProductByID")
-    public Product getProductByID(String productID) {
-        return productService.getProductByID(productID);
-    }
-
-    @PostMapping("/products/insertProduct")
-    public Product insertProduct(@RequestBody Product product) {
-        return productService.insertProduct(product);
-    }
+//    @GetMapping("/products/getProductByID")
+//    public Product getProductByID(String productID) {
+//        return productService.getProductByID(productID);
+//    }
+//
+//    @PostMapping("/products/insertProduct")
+//    public Product insertProduct(@RequestBody Product product) {
+//        return productService.insertProduct(product);
+//    }
 
     @PostMapping("/products/insertExm")
     public Product insertExm() {
