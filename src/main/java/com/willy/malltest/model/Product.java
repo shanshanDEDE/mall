@@ -48,8 +48,8 @@ public class Product {
     @Column(name = "Memory")
     private String memory;
 
-    @Column(name = "Disk")
-    private String disk;
+    @Column(name = "ProductDisk")
+    private String productDisk;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "SetupDate", nullable = false)
