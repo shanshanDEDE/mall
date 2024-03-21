@@ -7,6 +7,7 @@ import com.willy.malltest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -23,14 +24,15 @@ public class ProductController {
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
-//
-//        @GetMapping("/products/getProductByCategoryID")
-//    public List<Product> getProductByCategoryID(String categoryID) {
-//        return productService.getProductByCategoryID(categoryID);
-//    }
+
+    @GetMapping("/products/getProductByCategoryID")
+
+    public List<Product> getProductByCategoryID(@RequestParam  String categoryID) {
+        return productService.getProductByCategoryID(categoryID);
+    }
 //    @GetMapping("/products/getProductByID")
 //    public Product getProductByID(String productID) {
-//        return productService.getProductByID(productID);
+//        return productService.getProductById(productID);
 //    }
 //
 //    @PostMapping("/products/insertProduct")
