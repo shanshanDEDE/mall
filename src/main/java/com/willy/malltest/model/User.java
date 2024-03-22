@@ -16,7 +16,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserID")
-    private Long UserID;
+    private Integer userID;  //原本:變數是大寫開頭的UserID,型別是Long
 
 
 
