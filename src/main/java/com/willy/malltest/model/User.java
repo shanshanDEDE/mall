@@ -13,6 +13,16 @@ import java.util.Set;
 @Table(name = "Users")
 
 public class User {
+
+    public User() {
+        super();
+    }
+
+    public User(long userId) {
+        super();
+//        this.userId = userId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserID")

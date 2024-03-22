@@ -12,21 +12,14 @@ public class CartItems {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CartItemID")
+    @Column
     private Integer cartItemId;
 
-//    @Column(name = "UserID", nullable = false)
-//    private int userId;
-
-    // 假设ProductSpec是一个实体，且SpecID是其主键
-    @Column(name = "SpecID",insertable=false, updatable=false, nullable = false)
-    private String specId;
-
-    @Column(name = "Quantity", nullable = false)
+    @Column
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
+    @JoinColumn(name = "UserID")
     private User user;
 
     @ManyToOne

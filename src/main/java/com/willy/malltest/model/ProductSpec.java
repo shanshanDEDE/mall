@@ -1,9 +1,11 @@
 package com.willy.malltest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 
 
 @Getter
@@ -11,7 +13,14 @@ import lombok.Setter;
 @Entity
 @Table(name = "ProductSpec")
 public class ProductSpec {
+    public ProductSpec() {
+        super();
+    }
 
+    public ProductSpec(String productSpecId) {
+        super();
+//        this.productSpecId = productSpecId;
+    }
     @Id
     @Column(name = "SpecID", nullable = false, unique = true)
     private String specID;
@@ -25,18 +34,10 @@ public class ProductSpec {
     @Column(name = "StockQuantity", nullable = false)
     private int stockQuantity;
 
-    @Column(name = "PhotoFile1", nullable = false)
-    private String photoFile1;
+    @OneToMany(mappedBy = "productSpec", cascade = CascadeType.ALL)
+    private List<ProductPhoto> productPhotos;
 
-    @Column(name = "PhotoFile2")
-    private String photoFile2;
-
-    @Column(name = "PhotoFile3")
-    private String photoFile3;
-
-    @Column(name = "PhotoFile4")
-    private String photoFile4;
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductID")
     private Product product;
