@@ -15,6 +15,7 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
     private CategoryRepository categoryRepository;
     private ProductSpecRepository productSpecRepository;
 
@@ -27,15 +28,13 @@ public class ProductService {
     public List<Product> getProductByCategoryID(String categoryID) {
         return productRepository.findByCategoryCategoryID(categoryID);
     };
-//
-//    public Product getProductByID(String productID) {
-//        return productRepository.findById(productID).get();
-//    }
+
+    public Product findProductByID(String productID) {
+        return productRepository.findById(productID).get();
+    }
     public Product insertProduct( Product product) {
         return productRepository.save(product);
     }
-
-
 
 }
 

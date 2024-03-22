@@ -30,11 +30,11 @@ public class ProductController {
     public List<Product> getProductByCategoryID(@RequestParam  String categoryID) {
         return productService.getProductByCategoryID(categoryID);
     }
-//    @GetMapping("/products/getProductByID")
-//    public Product getProductByID(String productID) {
-//        return productService.getProductById(productID);
-//    }
-//
+    @GetMapping("/products/getProductByID")
+    public Product getProductByID(String productID) {
+        return productService.findProductByID(productID);
+    }
+
 //    @PostMapping("/products/insertProduct")
 //    public Product insertProduct(@RequestBody Product product) {
 //        return productService.insertProduct(product);
