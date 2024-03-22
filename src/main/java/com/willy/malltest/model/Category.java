@@ -20,7 +20,8 @@ public class Category {
     @Column(name = "CategoryName", nullable = false, length = 50)
     private String categoryName;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "Category")
     private Set<Product> products = new HashSet<>();
 
     public Category() {

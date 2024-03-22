@@ -19,6 +19,8 @@ public class ProductPhoto {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "SpecID")
-    private ProductSpec SpecID;
+    private ProductSpec productSpec;
+
+
 
 }
