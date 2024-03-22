@@ -25,7 +25,7 @@ public class CartServiceImpl implements CartService {
         User user = new User(userId);
         ProductSpec productSpec = new ProductSpec(productSpecId);
 
-        CartItems cartItems = cartItemsRepository.findByUserAndProduct(user,productSpec);
+        CartItems cartItems = cartItemsRepository.findByUserAndProductSpec(user,productSpec);
 
         if (cartItems != null) {
             cartItems.setQuantity(cartItems.getQuantity() + 1);

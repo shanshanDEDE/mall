@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface CartItemsRepository extends JpaRepository<CartItems, Integer> {
 
-    public CartItems findByUserAndProduct(User user, ProductSpec productSpec);
+    public CartItems findByUserAndProductSpec(User user, ProductSpec productSpec);
 
     public List<CartItems> findByUser(User user);
 }
