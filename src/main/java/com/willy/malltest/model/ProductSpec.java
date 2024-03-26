@@ -1,11 +1,11 @@
 package com.willy.malltest.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
@@ -13,14 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "ProductSpec")
 public class ProductSpec {
-    public ProductSpec() {
-        super();
-    }
 
-    public ProductSpec(String productSpecId) {
-        super();
-//        this.productSpecId = productSpecId;
-    }
     @Id
     @Column(name = "SpecID", nullable = false, unique = true)
     private String specID;
@@ -34,11 +27,12 @@ public class ProductSpec {
     @Column(name = "StockQuantity", nullable = false)
     private int stockQuantity;
 
-    @OneToMany(mappedBy = "productSpec", cascade = CascadeType.ALL)
-    private List<ProductPhoto> productPhotos;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductID")
     private Product product;
-}
+
+
+
+    @OneToMany(mappedBy = "productSpec",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<ProductPhoto> productPhotos = new HashSet<>();}
