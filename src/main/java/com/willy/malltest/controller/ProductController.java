@@ -5,10 +5,7 @@ import com.willy.malltest.model.Category;
 import com.willy.malltest.model.Product;
 import com.willy.malltest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -31,7 +28,7 @@ public class ProductController {
         return productService.getProductByCategoryID(categoryID);
     }
     @GetMapping("/products/getProductByID")
-    public Product getProductByID(String productID) {
+    public Product getProductByID(@requestParam(value="productID") String productID) {
         return productService.findProductByID(productID);
     }
 
@@ -54,6 +51,35 @@ public class ProductController {
         pro.setModifyDate(new Date());
         pro.setSetupDate(new Date());
         return productService.insertProduct(pro);
+    }
+    @PostMapping("/products/insertPhone")
+    public  Product insertPhone(@RequestBody Product p) {
+        Category cat = new Category("A", "iPhone");
+        p.setCategory(cat);
+        System.out.println(new Date());
+        p.setSetupDate(new Date());
+        p.setModifyDate(new Date());
+        return productService.insertProduct(p);
+    }
+
+    @PostMapping("/products/insertMac")
+    public  Product insertMac(@RequestBody Product p) {
+        Category cat = new Category("B", "Mac");
+        p.setCategory(cat);
+        System.out.println(new Date());
+        p.setSetupDate(new Date());
+        p.setModifyDate(new Date());
+        return productService.insertProduct(p);
+    }
+
+    @PostMapping("/products/insertPad")
+    public  Product insertPad(@RequestBody Product p) {
+        Category cat = new Category("C", "iPad");
+        p.setCategory(cat);
+        System.out.println(new Date());
+        p.setSetupDate(new Date());
+        p.setModifyDate(new Date());
+        return productService.insertProduct(p);
     }
 
 
