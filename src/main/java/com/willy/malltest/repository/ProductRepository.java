@@ -10,4 +10,12 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
     @Query("SELECT p FROM Product p INNER JOIN p.Category c WHERE c.categoryId = :ID")
     List<Product> findByCategoryCategoryID(String ID);
+
+    List<Product> findByProductName(String productName);
+
+    Product findProductsByProductID(String productID);
+
+
+
+
 }

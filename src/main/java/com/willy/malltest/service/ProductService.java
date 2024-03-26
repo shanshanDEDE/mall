@@ -6,6 +6,8 @@ import com.willy.malltest.model.ProductPhoto;
 
 import com.willy.malltest.repository.CategoryRepository;
 import com.willy.malltest.repository.ProductPhotoRepository;
+import com.willy.malltest.model.ProductSpec;
+import com.willy.malltest.repository.CategoryRepository;
 import com.willy.malltest.repository.ProductRepository;
 import com.willy.malltest.repository.ProductSpecRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,8 @@ public class ProductService {
 
 
 
+
+
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
@@ -46,6 +50,22 @@ public class ProductService {
     public Product insertProduct( Product product) {
 
         return productRepository.save(product);
+    }
+
+
+    public List<ProductSpec> findProductSpecByProductID(String productID) {
+
+        return productSpecRepository.findProductSpecByProductId(productID);
+    }
+
+   public Product findProductByProductID(String productID){
+
+       return productRepository.findProductsByProductID(productID);
+   }
+
+    public void saveProduct(Product product) {
+        // 实现保存产品到数据库的逻辑
+        productRepository.save(product);
     }
 
     // 根據頁碼搜尋商品
@@ -76,9 +96,6 @@ public class ProductService {
 //
 //        return productPhoto.getProductPhoto();
 //    }
-
-
-
 
 }
 

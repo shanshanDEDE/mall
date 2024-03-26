@@ -30,13 +30,18 @@ public class Track {
     @Column(name = "TrackID")
     private Integer  trackID;
 
-//    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
-    private User user;
 
-//    @JsonIgnore
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
+//    private User user;
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "SpecID", referencedColumnName = "SpecID")
     private ProductSpec productSpec;
+
+    //test
+    @ManyToOne
+    @JoinColumn(name = "userID")
+    private User user;
 }
