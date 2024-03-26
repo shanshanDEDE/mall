@@ -1,6 +1,7 @@
 package com.willy.malltest.controller;
 
 import com.willy.malltest.model.Orders;
+import com.willy.malltest.model.User;
 import com.willy.malltest.repository.OrdersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +29,10 @@ public class OrdersManagementController {
 
     @PostMapping("/orders/insert2")
     public Orders insert2(@RequestBody Orders ord) {
-        ord.setUserID(1);
+        User user = new User();
+        ord.setUser(user);
+        System.out.println(ord.getUser());
         return ordersRepo.save(ord);
     }
-
 
 }

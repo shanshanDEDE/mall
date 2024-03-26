@@ -22,8 +22,10 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderID;  //PRIMARY KEY identity(1,1),
 
-    @Column(name = "UserID")
-    private Integer userID;  //foreign key,
+    @ManyToOne
+    @JoinColumn(name = "UserID", insertable = false, updatable = false)
+    private User userID;  //foreign key,
+    //↑為什麼userID的型別是User?
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss EE") // 在 Java 環境內的時間格式(輸入時調整)
@@ -63,9 +65,21 @@ public class Orders {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "orders", cascade = CascadeType.ALL )
     private Set<OrdersDetail> ordersDetails = new HashSet<OrdersDetail>();
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
-//    @JsonIgnore
-//    private User users;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "UserID", nullable = false)
+    @JsonIgnore
+    private User user;
+    //↑User的@ManyToOne宣告了2次?
 
+    public void add(OrdersDetail item) {
+
+        if (item != null) {
+            if (ordersDetails == null) {
+                ordersDetails = new HashSet<>();
+            }
+
+            ordersDetails.add(item);
+            item.setOrders(this);
+        }
+    }
 }

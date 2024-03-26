@@ -1,11 +1,10 @@
 package com.willy.malltest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Getter
@@ -28,11 +27,8 @@ public class ProductSpec {
     private int stockQuantity;
 
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductID")
     private Product product;
-
-
-
-    @OneToMany(mappedBy = "productSpec",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<ProductPhoto> productPhotos = new HashSet<>();}
+}

@@ -1,11 +1,11 @@
 package com.willy.malltest.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,6 +19,10 @@ public class Category {
 
     @Column(name = "CategoryName", nullable = false, length = 50)
     private String categoryName;
+
+
+    @OneToMany(mappedBy = "Category")
+    private Set<Product> products = new HashSet<>();
 
     public Category() {
     }
