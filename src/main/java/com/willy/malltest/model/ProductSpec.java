@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @Getter
@@ -13,7 +12,13 @@ import java.util.Set;
 @Entity
 @Table(name = "ProductSpec")
 public class ProductSpec {
+    public ProductSpec() {
+        super();
+    }
 
+    public ProductSpec(String productSpecId) {
+        super();
+    }
     @Id
     @Column(name = "SpecID", nullable = false, unique = true)
     private String specID;
@@ -27,12 +32,11 @@ public class ProductSpec {
     @Column(name = "StockQuantity", nullable = false)
     private int stockQuantity;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ProductID")
     private Product product;
 
 
-
-    @OneToMany(mappedBy = "productSpec",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<ProductPhoto> productPhotos = new HashSet<>();}
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "productSpec", cascade = CascadeType.ALL)
+    private List<ProductPhoto> productPhotos = new ArrayList<>();
+}

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -43,7 +44,7 @@ public class CartServiceImpl implements CartService {
     }
 
     // 根據會員ID取得購物車
-    public List<CartItemDto> findCartByUserId(Integer userId) {
+    public List<CartItemDto> findCartByUserId(Long userId) {
         List<CartItems> cartItems = cartItemsRepository.findByUser(new User(userId));
 
         List<CartItemDto> cartItemDtos = cartItems.stream().map(cartItem -> {
@@ -61,12 +62,11 @@ public class CartServiceImpl implements CartService {
 
             ProductPhoto productPhoto= new ProductPhoto();
 
-            List<ProductPhoto> productPhotos = productPhoto.getProductSpec().getProductPhotos();
+            List<ProductPhoto> productPhotos = productPhoto.getSpecID().getProductPhotos();
             if (productPhotos != null && productPhotos.size() != 0) {
                 ProductPhoto firstPhoto = productPhotos.get(0);
                 cartItemDto.setProductPhotoId(firstPhoto.getPhotoID());
             }
-
             return cartItemDto;
         }).toList();
 
