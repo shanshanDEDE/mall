@@ -1,10 +1,12 @@
 package com.willy.malltest.controller;
 
 
+import com.willy.malltest.dto.ProductDto;
 import com.willy.malltest.model.Category;
 import com.willy.malltest.model.Product;
 import com.willy.malltest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -25,13 +27,13 @@ public class ProductController {
 
     @GetMapping("/products/getProductByCategoryID")
 
-    public List<Product> getProductByCategoryID(@RequestParam String categoryID) {
-        return productService.getProductByCategoryID(categoryID);
+    public List<Product> getProductByCategoryId(@RequestParam  String categoryId) {
+        return productService.getProductByCategoryId(categoryId);
     }
 
     @GetMapping("/products/getProductByID")
-    public Product getProductByID(String productID) {
-        return productService.findProductByID(productID);
+    public Product getProductById(@RequestParam(value="productId") String productId) {
+        return productService.findProductById(productId);
     }
 
 //    @PostMapping("/products/insertProduct")
@@ -39,24 +41,24 @@ public class ProductController {
 //        return productService.insertProduct(product);
 //    }
 
-    @PostMapping("/products/insertExm")
-    public Product insertExm() {
-        Category cat = new Category("A", "iPhone");
-
-        Product pro = new Product();
-        pro.setProductID("A1402");
-        pro.setProductName("iPhone 14 128G");
-        pro.setProductDescription("6.1 吋 2,532 x 1,170pixels 解析度超 Retina XDR 顯示器，搭載 OLED 螢幕面板，支援原彩顯示、電影級 P3 標準廣色域；顯示 HDR 內容時，螢幕亮度最高可達 1,200nits。");
-        pro.setCategory(cat);
-
-        pro.setPrice(25900);
-        pro.setModifyDate(new Date());
-        pro.setSetupDate(new Date());
-        return productService.insertProduct(pro);
-    }
-
+    //測試insert(寫死)
+//    @PostMapping("/products/insertExm")
+//    public Product insertExm() {
+//        Category cat = new Category("A", "iPhone");
+//
+//        Product pro = new Product();
+//        pro.setProductID("A1402");
+//        pro.setProductName("iPhone 14 128G");
+//        pro.setProductDescription("6.1 吋 2,532 x 1,170pixels 解析度超 Retina XDR 顯示器，搭載 OLED 螢幕面板，支援原彩顯示、電影級 P3 標準廣色域；顯示 HDR 內容時，螢幕亮度最高可達 1,200nits。");
+//        pro.setCategory(cat);
+//
+//        pro.setPrice(25900);
+//        pro.setModifyDate(new Date());
+//        pro.setSetupDate(new Date());
+//        return productService.insertProduct(pro);
+//    }
     @PostMapping("/products/insertPhone")
-    public Product insertPhone(@RequestBody Product p) {
+    public  Product insertPhone(@RequestBody Product p) {
         Category cat = new Category("A", "iPhone");
         p.setCategory(cat);
         System.out.println(new Date());
@@ -66,7 +68,7 @@ public class ProductController {
     }
 
     @PostMapping("/products/insertMac")
-    public Product insertMac(@RequestBody Product p) {
+    public  Product insertMac(@RequestBody Product p) {
         Category cat = new Category("B", "Mac");
         p.setCategory(cat);
         System.out.println(new Date());
@@ -76,7 +78,7 @@ public class ProductController {
     }
 
     @PostMapping("/products/insertPad")
-    public Product insertPad(@RequestBody Product p) {
+    public  Product insertPad(@RequestBody Product p) {
         Category cat = new Category("C", "iPad");
         p.setCategory(cat);
         System.out.println(new Date());
@@ -85,11 +87,11 @@ public class ProductController {
         return productService.insertProduct(p);
     }
 
-    @PutMapping("/products/updateProduct/{productID}")
-    public Product updateProduct(@PathVariable String productID, @RequestBody Product updatedProduct) {
-        System.out.println(productID);
+    @PutMapping("/products/updateProduct/{productId}")
+    public Product updateProduct(@PathVariable String productId, @RequestBody Product updatedProduct) {
+        System.out.println(productId);
         // 不需要转换为字符串
-        Product existingProduct = productService.findProductByProductID(productID);
+        Product existingProduct = productService.findProductByProductId(productId);
         System.out.println(existingProduct);
         System.out.println("-------------------------------------------------");
         Category cat = new Category("A", "iPhone");
@@ -114,18 +116,18 @@ public class ProductController {
         return existingProduct;
     }
 
-    @GetMapping("/products/findProductByProductID")
-    public Product findProductByProductID(@RequestParam String productID) {
-        return productService.findProductByProductID(productID);
+    @GetMapping("/products/findProductByProductId")
+    public Product findProductByProductId(@RequestParam String productId) {
+        return productService.findProductByProductId(productId);
     }
 
-    @GetMapping("/products/findProductByProductID1")
-    public Product findProductByProductID1(@RequestParam String productID) {
-        // 首先确认传递给 findProductByProductID 方法的 productID 值是否正确
-        System.out.println("传递的 productID 值为：" + productID);
+    @GetMapping("/products/findProductByProductId1")
+    public Product findProductByProductId1(@RequestParam String productId) {
+        // 首先确认传递给 findProductByProductId 方法的 productID 值是否正确
+        System.out.println("传递的 productId 值为：" + productId);
 
         // 调用 productService 中的 findProductByProductID 方法来查找产品
-        Product existingProduct = productService.findProductByProductID(productID);
+        Product existingProduct = productService.findProductByProductId(productId);
 
         // 查看返回的产品对象是否为空
         if (existingProduct != null) {
@@ -136,6 +138,17 @@ public class ProductController {
 
         // 返回产品对象
         return existingProduct;
+    }
+// 根據商品頁面取得商品Dto
+    @GetMapping("/products/{pageNumber}")
+    public Page<ProductDto> findProductByPage(@PathVariable Integer pageNumber) {
+        Page<ProductDto> productDtos = productService.findProductByPage(pageNumber);
+        return productDtos;
+    }
+    @GetMapping(path = "/product/photo/{id}", produces = "image/*")
+    public byte[] findProductPhotoById(@PathVariable Integer id) {
+
+        return productService.findProductPhotoById(id)	;
     }
 
 }

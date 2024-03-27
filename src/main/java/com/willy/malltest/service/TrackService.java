@@ -32,7 +32,7 @@ public class TrackService {
             TrackDTO dto = new TrackDTO();
             dto.setTrackID(track.getTrackID());
             dto.setUserID(track.getUser().getUserID());
-            dto.setSpecID(track.getProductSpec().getSpecID());
+            dto.setSpecID(track.getProductSpec().getSpecId());
             tracksdto.add(dto); // 將轉換後的 TrackDTO 加入到列表中
         }
         return tracksdto;

@@ -18,6 +18,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.BeanUtils;
 import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
 
 @Service
 public class ProductService {
@@ -40,12 +43,12 @@ public class ProductService {
         return productRepository.findAll();
     }
 //
-    public List<Product> getProductByCategoryID(String categoryID) {
-        return productRepository.findByCategoryCategoryID(categoryID);
+    public List<Product> getProductByCategoryId(String categoryId) {
+        return productRepository.findByCategoryCategoryId(categoryId);
     };
 
-    public Product findProductByID(String productID) {
-        return productRepository.findById(productID).get();
+    public Product findProductById(String productId) {
+        return productRepository.findById(productId).get();
     }
     public Product insertProduct( Product product) {
 
@@ -53,14 +56,14 @@ public class ProductService {
     }
 
 
-    public List<ProductSpec> findProductSpecByProductID(String productID) {
+    public List<ProductSpec> findProductSpecByProductId(String productId) {
 
-        return productSpecRepository.findProductSpecByProductId(productID);
+        return productSpecRepository.findProductSpecByProductId(productId);
     }
 
-   public Product findProductByProductID(String productID){
+   public Product findProductByProductId(String productId){
 
-       return productRepository.findProductsByProductID(productID);
+       return productRepository.findProductsByProductId(productId);
    }
 
     public void saveProduct(Product product) {
@@ -68,7 +71,7 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    // 根據頁碼搜尋商品
+    // 根據頁碼搜尋商品和二次封裝
     public Page<ProductDto> findProductByPage(Integer pageNumber) {
         Pageable page = PageRequest.of(pageNumber, 9);
         Page<Product> products = productRepository.findAll(page);
@@ -80,7 +83,7 @@ public class ProductService {
             List<ProductPhoto> productPhotos = p.getProductSpecs().get(0).getProductPhotos();
             if (productPhotos != null && productPhotos.size() != 0) {
                 ProductPhoto firstPhoto = productPhotos.get(0);
-                pt.setPhotoID(firstPhoto.getPhotoID());
+                pt.setPhotoId(firstPhoto.getPhotoId());
             }
             return pt;
         });
@@ -88,14 +91,20 @@ public class ProductService {
     }
 
     // 根據圖片ID搜尋商品圖片
-//    public byte[] findProductPhotoById(String id) {
-//        ProductPhoto productPhoto = productPhotoDao.findById(id).get();
-//        if (productPhoto == null) {
-//            return null;
-//        }
-//
-//        return productPhoto.getProductPhoto();
-//    }
+    public byte[] findProductPhotoById(Integer id) {
+        ProductPhoto productPhoto = productPhotoRepository.findById(id).get();
+        if (productPhoto == null) {
+            return null;
+        }
+        String filePath = productPhoto.getPhotoFile();
+        try {
+            // 讀取檔案內容並返回
+            return Files.readAllBytes(Paths.get(filePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }
 

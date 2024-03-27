@@ -10,57 +10,57 @@ import java.util.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 public class Product {
     @Id
-    @Column(name = "ProductID", nullable = false, unique = true)
-    private String productID;
+    @Column(name="product_id",nullable = false, unique = true)
+    private String productId;
 
-    @Column(name = "ProductDescription", nullable = false)
+    @Column(name="product_description" ,nullable = false)
     private String productDescription;
 
-    @Column(name = "ProductName", nullable = false)
+    @Column(name="product_name" ,nullable = false)
     private String productName;
 
 //    @Column(name = "CategoryID", nullable = false)
 //    private String categoryID;
 
-    @Column(name = "Price", nullable = false)
+    @Column(nullable = false)
     private int price;
 
-    @Column(name = "Capacity")
+    @Column
     private String capacity;
 
-    @Column(name = "Chip")
+    @Column
     private String chip;
 
-    @Column(name = "Wifi")
+    @Column
     private String wifi;
 
-    @Column(name = "Size")
+    @Column
     private String size;
 
-    @Column(name = "CPU")
+    @Column
     private String cpu;
 
-    @Column(name = "Memory")
+    @Column
     private String memory;
 
-    @Column(name = "ProductDisk")
+    @Column(name = "product_disk")
     private String productDisk;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "SetupDate", nullable = false)
+    @Column(name="setup_date",nullable = false)
     private Date setupDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "ModifyDate", nullable = false)
+    @Column(name = "modify_date", nullable = false)
     private Date modifyDate;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY) //延遲加載
-    @JoinColumn(name = "CategoryID", nullable = false)
-    private Category Category;
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSpec> productSpecs= new ArrayList<>();

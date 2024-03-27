@@ -14,28 +14,36 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "ProductSpec")
+@Table(name = "product_spec")
 public class ProductSpec {
 
     @Id
-    @Column(name = "SpecID", nullable = false, unique = true)
-    private String specID;
+    @Column(name="spec_id", nullable = false, unique = true)
+    private String specId;
 
-    @Column(name = "ProductID", insertable = false, updatable = false, nullable = false)
+    @Column(name="product_id" ,insertable = false, updatable = false, nullable = false)
     private String productId;
 
-    @Column(name = "Color", nullable = false)
+    @Column( nullable = false)
     private String color;
 
-    @Column(name = "StockQuantity", nullable = true)
+    @Column(name="stock_quantity" ,nullable = true)
     private int stockQuantity;
 
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ProductID")
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "productSpec", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productSpec", cascade = CascadeType.ALL)
     private List<ProductPhoto> productPhotos= new ArrayList<>();
+
+    public ProductSpec() {
+        super();
+    }
+
+    public ProductSpec(String productSpecId) {
+        super();
+    }
 }
