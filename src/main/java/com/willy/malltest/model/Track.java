@@ -1,6 +1,5 @@
 package com.willy.malltest.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Track")
+@Table(name = "track")
 public class Track {
 
 //    @Id
@@ -27,8 +26,8 @@ public class Track {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TrackID")
-    private Integer  trackID;
+    @Column
+    private Integer trackID;
 
 
 //    @ManyToOne(fetch = FetchType.LAZY)
@@ -37,11 +36,11 @@ public class Track {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SpecID", referencedColumnName = "SpecID")
+    @JoinColumn(name = "spec_id", referencedColumnName = "spec_id")
     private ProductSpec productSpec;
 
     //test
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @JoinColumn(name = "user_Id")
     private User user;
 }

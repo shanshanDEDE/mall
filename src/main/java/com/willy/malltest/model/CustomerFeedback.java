@@ -1,46 +1,42 @@
 package com.willy.malltest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 @Entity
-@Table(name = "CustomerFeedback")
+@Table(name = "customer_feedback")
 
 public class CustomerFeedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "FeedbackID")
-    private Integer feedbackID;
+    @Column
+    private Integer feedbackId;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "OrderID", referencedColumnName = "OrderID")
+    @ManyToOne
+    @JoinColumn(name = "order_id")
     private Orders orders;
 
-    @Column(name = "Type")
+    @Column
     private String type;
 
-    @Column(name = "Description")
+    @Column
     private String description;
 
-    @Column(name = "FeedbackDate")
+    @Column
     private Date feedbackDate;
 
-    @Column(name = "CustomerFeedbackStatus")
+    @Column
     private String customerFeedbackStatus;
 
 }

@@ -5,19 +5,21 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "return_details")
 public class ReturnDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer ReturnDetailID;
+    private Integer returnDetailId;
+
+    @OneToOne
+    @JoinColumn(name = "orders_detail_id")
+    private OrdersDetail ordersDetail;
 
 
-
-    private Integer OrdersDetailID;
-
-    private String ReturnReason;
+    private String returnReason;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ReturnID")
+    @JoinColumn(name = "return_id")
     private Returns returns;
 }

@@ -18,6 +18,4 @@ public class ThirdParty {
     private User user; // 指向 User 类的引用
 
 
-
-
 }

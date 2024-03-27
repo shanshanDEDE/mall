@@ -12,58 +12,58 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 public class Product {
     @Id
-    @Column(name = "ProductID", nullable = false, unique = true)
-    private String productID;
+    @Column
+    private String productId;
 
-    @Column(name = "ProductDescription", nullable = false)
+    @Column
     private String productDescription;
 
-    @Column(name = "ProductName", nullable = false)
+    @Column
     private String productName;
 
 //    @Column(name = "CategoryID", nullable = false)
 //    private String categoryID;
 
-    @Column(name = "Price", nullable = false)
+    @Column
     private int price;
 
-    @Column(name = "Capacity")
+    @Column
     private String capacity;
 
-    @Column(name = "Chip")
+    @Column
     private String chip;
 
-    @Column(name = "Wifi")
+    @Column
     private String wifi;
 
-    @Column(name = "Size")
+    @Column
     private String size;
 
-    @Column(name = "CPU")
+    @Column
     private String cpu;
 
-    @Column(name = "Memory")
+    @Column
     private String memory;
 
-    @Column(name = "ProductDisk")
+    @Column
     private String productDisk;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "SetupDate", nullable = false)
+    @Column
     private Date setupDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "ModifyDate", nullable = false)
+    @Column
     private Date modifyDate;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY) //延遲加載
-    @JoinColumn(name = "CategoryID", nullable = false)
-    private Category Category;
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<ProductSpec> productSpecs= new HashSet<>();
+    private Set<ProductSpec> productSpecs = new HashSet<>();
 }

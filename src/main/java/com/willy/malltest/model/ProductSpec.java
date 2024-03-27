@@ -5,30 +5,42 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
 @Setter
 @Entity
-@Table(name = "ProductSpec")
+@Table(name = "product_spec")
 public class ProductSpec {
 
     @Id
-    @Column(name = "SpecID", nullable = false, unique = true)
-    private String specID;
+    @Column(name = "spec_id")
+    private String specId;
 
-    @Column(name = "ProductID", insertable = false, updatable = false, nullable = false)
-    private String productId;
-
-    @Column(name = "Color", nullable = false)
+    @Column
     private String color;
 
-    @Column(name = "StockQuantity", nullable = false)
+    @Column
     private int stockQuantity;
+
+
+    @OneToMany(mappedBy = "productSpec")
+    private Set<CartItems> cartItems = new HashSet<>();
+
+    @OneToMany(mappedBy = "productSpec")
+    private Set<ProductPhoto> productPhotos = new HashSet<>();
+
+    @OneToMany(mappedBy = "productSpec")
+    private Set<Track> tracks = new HashSet<>();
+
+    @OneToMany(mappedBy = "productSpec")
+    private Set<OrdersDetail> ordersDetails = new HashSet<>();
 
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ProductID")
+    @JoinColumn(name = "product_id")
     private Product product;
 }

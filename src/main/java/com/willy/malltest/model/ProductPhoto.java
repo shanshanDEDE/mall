@@ -7,20 +7,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "ProductPhoto")
+@Table(name = "product_photo")
 public class ProductPhoto {
 
     @Id
-    @Column(name = "PhotoID", nullable = false, unique = true)
+    @Column
     private Integer photoID;
 
-    @Column(name = "PhotoFile",nullable = false)
-    private String photoFile;
+    @Lob
+    @Column
+    private byte[] photoFile;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn (name = "SpecID")
+    @JoinColumn(name = "spec_id", referencedColumnName = "spec_id")
     private ProductSpec productSpec;
-
 
 
 }

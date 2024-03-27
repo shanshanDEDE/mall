@@ -11,50 +11,42 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "Orders")
+@Table(name = "orders")
 public class Orders {
 
     @Id
-    @Column(name = "OrderID")
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer orderID;  //PRIMARY KEY identity(1,1),
+    private Integer orderId;  //PRIMARY KEY identity(1,1),
 
     @ManyToOne
-    @JoinColumn(name = "UserID", insertable = false, updatable = false)
-    private User userID;  //foreign key,
+    @JoinColumn(name = "user_id")
+    private User user;  //foreign key,
 
-    @Column(name = "OrderDate")
+    @Column
     private Date orderDate;
-    @Column(name = "PaymentMethod")
+    @Column
     private String paymentMethod;
-    @Column(name = "OrderStatus")
+    @Column
     private String orderStatus;
-    @Column(name = "DeliverDate")
+    @Column
     private Date deliverDate;
-    @Column(name = "PickupDate")
+    @Column
     private Date pickupDate;
-    @Column(name = "DeliverAddress")
+    @Column
     private String deliverAddress;
-    @Column(name = "RecipientName")
+    @Column
     private String recipientName;
-    @Column(name = "RecipientPhone")
+    @Column
     private String recipientPhone;
-    @Column(name = "PaymentTime")
+    @Column
     private Date paymentTime;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "orders", cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private Set<OrdersDetail> ordersDetails = new HashSet<OrdersDetail>();
 
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+    private Set<CustomerFeedback> customerFeedbacks = new HashSet<CustomerFeedback>();
 
-    public void add(OrdersDetail item) {
 
-        if (item != null) {
-            if (ordersDetails == null) {
-                ordersDetails = new HashSet<>();
-            }
-
-            ordersDetails.add(item);
-            item.setOrders(this);
-        }
-    }
 }

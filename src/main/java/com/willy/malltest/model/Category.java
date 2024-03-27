@@ -10,18 +10,18 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(name = "Category")
+@Table
 public class Category {
 
     @Id
-    @Column(name = "CategoryID", nullable = false, length = 36)
+    @Column
     private String categoryId;
 
-    @Column(name = "CategoryName", nullable = false, length = 50)
+    @Column
     private String categoryName;
 
 
-    @OneToMany(mappedBy = "Category")
+    @OneToMany(mappedBy = "category")
     private Set<Product> products = new HashSet<>();
 
     public Category() {

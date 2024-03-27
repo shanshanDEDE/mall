@@ -49,25 +49,16 @@ public class User {
     @Column
     private Integer authentication;
 
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Orders> orders = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    private Set<CustomerFeedback> customerFeedback = new HashSet<>();
 
     //test
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Track> Track;
 
-    public void add(Orders order) {
 
-        if (order != null) {
-
-            if (orders == null) {
-                orders = new HashSet<>();
-            }
-
-            orders.add(order);
-            order.setUserID(this);
-        }
-    }
 }
