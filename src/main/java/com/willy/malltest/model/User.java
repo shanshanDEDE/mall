@@ -12,44 +12,44 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UserID")
-    private Long userID;
+    @Column(name = "user_id")
+    private Long userId;
 
     @OneToMany(mappedBy = "user")
     private Set<ThirdParty> thirdParty = new HashSet<>();
 
-    @Column(name = "UserName")
-    private String username;
-    @Column(name = "Email")
+    @Column
+    private String userName;
+    @Column
     private String email;
-    @Column(name = "Password")
+    @Column
     private String password;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss EE") // 在 Java 環境內的時間格式(輸入時調整)
-    @Column(name = "RegisterDate")
-    private Date RegisterDate;
+    @Column
+    private Date registerDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss EE") // 在 Java 環境內的時間格式(輸入時調整)
-    @Column(name = "LastloginTime")
-    private Date LastLoginTime;
+    @Column
+    private Date lastLoginTime;
 
-    @Column(name = "UserAddress")
-    private String UserAddress;
-    @Column(name = "DeliverAddress")
-    private String DeliverAddress;
-    @Column(name = "Phone")
-    private String Phone;
-    @Column(name = "Authentication")
-    private Integer Authentication;
+    @Column
+    private String userAddress;
+    @Column
+    private String deliverAddress;
+    @Column
+    private String phone;
+    @Column
+    private Integer authentication;
 
-    @OneToMany(mappedBy = "userID", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
     private Set<Orders> orders = new HashSet<>();
 
 
