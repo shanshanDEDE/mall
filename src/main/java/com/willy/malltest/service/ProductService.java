@@ -1,6 +1,7 @@
 package com.willy.malltest.service;
 
 import com.willy.malltest.model.Product;
+import com.willy.malltest.model.ProductSpec;
 import com.willy.malltest.repository.CategoryRepository;
 import com.willy.malltest.repository.ProductRepository;
 import com.willy.malltest.repository.ProductSpecRepository;
@@ -53,12 +54,12 @@ public class ProductService {
         productRepository.save(product);
     }
 
-//    public List<ProductSpec> findProductSpecByProductId(String productId) {
-//        Product product = productRepository.findProductsByProductId(productId);
-//        return productSpecRepository.findProductSpecByProductId(product.getProductId());
-//
-//
-//    }
+    public List<ProductSpec> findProductSpecByProductId(String productId) {
+        Product product = productRepository.findProductsByProductId(productId);
+        return productSpecRepository.findProductSpecByProduct(product);
+
+
+    }
 
 }
 

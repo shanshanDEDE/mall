@@ -3,6 +3,7 @@ package com.willy.malltest.controller;
 
 import com.willy.malltest.model.Category;
 import com.willy.malltest.model.Product;
+import com.willy.malltest.model.ProductSpec;
 import com.willy.malltest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -138,10 +139,10 @@ public class ProductController {
         return existingProduct;
     }
 
-//    @GetMapping("/products/findProductSpecByProductId")
-//    public List<ProductSpec> findProductSpecByProductId(String productId) {
-//        return productService.findProductSpecByProductId(productId);
-//    }
+    @GetMapping("/products/findProductSpecByProductId")
+    public List<ProductSpec> findProductSpecByProductId(String productId) {
+        return productService.findProductSpecByProductId(productId);
+    }
 
 
 }

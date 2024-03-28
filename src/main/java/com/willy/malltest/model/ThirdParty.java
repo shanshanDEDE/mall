@@ -9,7 +9,7 @@ import lombok.Data;
 public class ThirdParty {
     @Id
     @Column(name = "provider_id")
-    private String providerID;
+    private String providerId;
     @Column(name = "provider_name")
     private String providerName;
 
