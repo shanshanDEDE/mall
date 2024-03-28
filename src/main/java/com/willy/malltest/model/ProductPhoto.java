@@ -1,5 +1,6 @@
 package com.willy.malltest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,6 +21,7 @@ public class ProductPhoto {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "spec_id", referencedColumnName = "spec_id")
+    @JsonIgnore
     private ProductSpec productSpec;
 
 
