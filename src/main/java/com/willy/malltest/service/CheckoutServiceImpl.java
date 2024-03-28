@@ -34,7 +34,7 @@ public class CheckoutServiceImpl implements CheckoutService{
 
         // populate order with orderItems
         Set<OrdersDetail> orderItems = purchase.getOrderItems();
-        orderItems.forEach(item -> orders.add(item));
+//        orderItems.forEach(item -> orders.add(item));
 
         // populate order with shippingAddress
         orders.setDeliverAddress(purchase.getOrders().getDeliverAddress());
@@ -42,14 +42,14 @@ public class CheckoutServiceImpl implements CheckoutService{
 
         // populate customer with order
         User user = purchase.getUser();
-        user.add(orders);
+//        user.add(orders);
 
         // save to the database
         usersRepository.save(user);
 
         // return a response
 //        return new PurchaseResponse(orderTrackingNumber);
-        return new PurchaseResponse(orders.getOrderID());
+        return new PurchaseResponse(orders.getOrderId());
     }
 
     private String generateOrderTrackingNumber() {

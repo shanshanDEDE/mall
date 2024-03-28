@@ -31,7 +31,7 @@ public class TrackService {
         for (Track track : tracks) { // 使用 for-each 迴圈遍歷 List 中的每個 Track 對象
             TrackDTO dto = new TrackDTO();
             dto.setTrackID(track.getTrackID());
-            dto.setUserID(track.getUser().getUserID());
+            dto.setUserID(track.getUser().getUserId());
             dto.setSpecID(track.getProductSpec().getSpecID());
             tracksdto.add(dto); // 將轉換後的 TrackDTO 加入到列表中
         }
