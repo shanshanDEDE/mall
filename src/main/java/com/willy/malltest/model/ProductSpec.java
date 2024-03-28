@@ -5,8 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 @Getter
@@ -19,27 +20,30 @@ public class ProductSpec {
     @Column(name = "spec_id")
     private String specId;
 
-    @Column
+    @Column(name = "color")
     private String color;
 
-    @Column
+    @Column(name = "stock_quantity")
     private int stockQuantity;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "productSpec")
-    private Set<CartItems> cartItems = new HashSet<>();
-
-    @OneToMany(mappedBy = "productSpec")
-    private Set<ProductPhoto> productPhotos = new HashSet<>();
-
-    @OneToMany(mappedBy = "productSpec")
-    private Set<Track> tracks = new HashSet<>();
-
-    @OneToMany(mappedBy = "productSpec")
-    private Set<OrdersDetail> ordersDetails = new HashSet<>();
-
+    private List<CartItems> cartItems = new ArrayList<>();
 
     @JsonIgnore
+    @OneToMany(mappedBy = "productSpec")
+    private List<ProductPhoto> productPhotos = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "productSpec")
+    private List<Track> tracks = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "productSpec")
+    private List<OrdersDetail> ordersDetails = new ArrayList<>();
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;

@@ -10,13 +10,14 @@ public class ReturnDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "return_detail_id")
     private Integer returnDetailId;
 
     @OneToOne
     @JoinColumn(name = "orders_detail_id")
     private OrdersDetail ordersDetail;
 
-
+    @Column(name = "return_reason")
     private String returnReason;
 
     @ManyToOne(fetch = FetchType.LAZY)

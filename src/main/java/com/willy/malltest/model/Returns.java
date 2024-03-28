@@ -19,17 +19,21 @@ public class Returns {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "return_id")
     private Integer returnId;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Orders orders;
 
+    @Column(name = "return_status")
     private String returnStatus;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss EE") // 在 Java 環境內的時間格式(輸入時調整)
+    @Column(name = "return_date")
     private Date returnDate;
+
     @OneToMany(mappedBy = "returns", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ReturnDetails> returnDetails;
 

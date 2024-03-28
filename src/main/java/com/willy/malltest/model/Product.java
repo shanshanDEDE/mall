@@ -5,9 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,48 +15,48 @@ import java.util.Set;
 @Table(name = "product")
 public class Product {
     @Id
-    @Column
+    @Column(name = "product_id")
     private String productId;
 
-    @Column
+    @Column(name = "product_description")
     private String productDescription;
 
-    @Column
+    @Column(name = "product_name")
     private String productName;
 
 //    @Column(name = "CategoryID", nullable = false)
 //    private String categoryID;
 
-    @Column
+    @Column(name = "price")
     private int price;
 
-    @Column
+    @Column(name = "capacity")
     private String capacity;
 
-    @Column
+    @Column(name = "chip")
     private String chip;
 
-    @Column
+    @Column(name = "wifi")
     private String wifi;
 
-    @Column
+    @Column(name = "size")
     private String size;
 
-    @Column
+    @Column(name = "cpu")
     private String cpu;
 
-    @Column
+    @Column(name = "memory")
     private String memory;
 
-    @Column
+    @Column(name = "product_disk")
     private String productDisk;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column
+    @Column(name = "setup_date")
     private Date setupDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column
+    @Column(name = "modify_date")
     private Date modifyDate;
 
     @JsonIgnore
@@ -64,6 +64,7 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<ProductSpec> productSpecs = new HashSet<>();
+    @JsonIgnore
+    @OneToMany( mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductSpec> productSpecs = new ArrayList<>();
 }

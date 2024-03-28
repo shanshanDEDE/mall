@@ -1,5 +1,6 @@
 package com.willy.malltest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,22 +12,23 @@ import lombok.Setter;
 public class OrdersDetail {
 
     @Id
-    @Column
+    @Column(name = "orders_detail_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ordersDetailId;  //PRIMARY KEY identity(1,1),
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Orders orders;
 
     @ManyToOne
     @JoinColumn(name = "spec_id")
     private ProductSpec productSpec;
 
-    @Column
+    @Column(name = "quantity")
     private int quantity;
 
-    @Column
+    @Column(name = "price")
     private int price;
 
     @OneToOne(mappedBy = "ordersDetail")

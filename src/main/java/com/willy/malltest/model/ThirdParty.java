@@ -8,9 +8,9 @@ import lombok.Data;
 @Table(name = "third_party")
 public class ThirdParty {
     @Id
-    @Column
+    @Column(name = "provider_id")
     private String providerID;
-    @Column
+    @Column(name = "provider_name")
     private String providerName;
 
     @ManyToOne(fetch = FetchType.LAZY) // 指定多对一关系

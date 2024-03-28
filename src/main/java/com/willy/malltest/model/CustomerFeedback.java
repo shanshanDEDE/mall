@@ -14,7 +14,7 @@ public class CustomerFeedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "feedback_id")
     private Integer feedbackId;
 
     @JsonIgnore
@@ -27,16 +27,16 @@ public class CustomerFeedback {
     @JoinColumn(name = "order_id")
     private Orders orders;
 
-    @Column
+    @Column(name = "type")
     private String type;
 
-    @Column
+    @Column(name = "description")
     private String description;
 
-    @Column
+    @Column(name = "feedback_date")
     private Date feedbackDate;
 
-    @Column
+    @Column(name = "customer_feedback_status")
     private String customerFeedbackStatus;
 
 }

@@ -11,11 +11,11 @@ import lombok.Setter;
 public class ProductPhoto {
 
     @Id
-    @Column
+    @Column(name = "photo_id")
     private Integer photoID;
 
     @Lob
-    @Column
+    @Column(name = "photo_file")
     private byte[] photoFile;
 
     @ManyToOne(fetch = FetchType.LAZY)

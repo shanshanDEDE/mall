@@ -4,8 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -14,15 +15,15 @@ import java.util.Set;
 public class Category {
 
     @Id
-    @Column
+    @Column(name = "category_id")
     private String categoryId;
 
-    @Column
+    @Column(name = "category_name")
     private String categoryName;
 
 
     @OneToMany(mappedBy = "category")
-    private Set<Product> products = new HashSet<>();
+    private List<Product> products = new ArrayList<>();
 
     public Category() {
     }

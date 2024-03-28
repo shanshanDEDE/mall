@@ -12,10 +12,10 @@ public class CartItems {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "cart_item_id")
     private Integer cartItemId;
 
-    @Column
+    @Column(name = "quantity")
     private int quantity;
 
     @ManyToOne
