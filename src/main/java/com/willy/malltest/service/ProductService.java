@@ -1,14 +1,17 @@
 package com.willy.malltest.service;
 
 import com.willy.malltest.model.Product;
+import com.willy.malltest.model.ProductPhoto;
 import com.willy.malltest.model.ProductSpec;
 import com.willy.malltest.repository.CategoryRepository;
+import com.willy.malltest.repository.ProductPhotoRepository;
 import com.willy.malltest.repository.ProductRepository;
 import com.willy.malltest.repository.ProductSpecRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -20,6 +23,9 @@ public class ProductService {
     private CategoryRepository categoryRepository;
     @Autowired
     private ProductSpecRepository productSpecRepository;
+
+    @Autowired
+    private ProductPhotoRepository productPhotoRepository;
 
 
     public List<Product> getAllProducts() {
@@ -61,5 +67,31 @@ public class ProductService {
 
     }
 
+    public List<ProductPhoto> findProductPhotoByproductSpecId(String productSpecId) {
+        ProductSpec productSpec=productSpecRepository.findProductSpecBySpecId(productSpecId);
+
+
+        return productPhotoRepository.findProductPhotoByProductSpec(productSpec);
+    }
+
+    public ProductPhoto insertProductPhoto(ProductPhoto productPhoto) {
+
+        return productPhotoRepository.save(productPhoto);
+    }
+
+    public  List<ProductPhoto> selectAllProductPhoto(String productId) {
+        return  productPhotoRepository.findAll();
+    }
+
+    public  ProductPhoto findProductPhotoByPhotoId(Integer photoId) {
+        Optional<ProductPhoto> optional = productPhotoRepository.findById(photoId);
+
+        return optional.orElse(null);
+    }
+
+    public ProductSpec findProductSpecBySpecId(String specId) {
+
+        return productSpecRepository.findProductSpecBySpecId(specId);
+    }
 }
 

@@ -13,6 +13,7 @@ public class ProductPhoto {
 
     @Id
     @Column(name = "photo_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer photoID;
 
     @Lob

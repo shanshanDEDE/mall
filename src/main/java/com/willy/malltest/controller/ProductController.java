@@ -1,13 +1,17 @@
 package com.willy.malltest.controller;
 
 
+import ch.qos.logback.core.model.Model;
 import com.willy.malltest.model.Category;
 import com.willy.malltest.model.Product;
+import com.willy.malltest.model.ProductPhoto;
 import com.willy.malltest.model.ProductSpec;
 import com.willy.malltest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -145,4 +149,24 @@ public class ProductController {
     }
 
 
+    @PostMapping("/products/insertProductPhoto")
+    public String insertProductPhoto(@RequestParam String specId, @RequestBody MultipartFile file, Model model) {
+
+        try {
+            if (file.isEmpty()) {
+                return "ProductPhoto is empty";
+            }
+
+            ProductPhoto productPhoto = new ProductPhoto();
+            productPhoto.setPhotoFile(file.getBytes());
+            productPhoto.setProductSpec(productService.findProductSpecBySpecId(specId));
+            productService.insertProductPhoto(productPhoto);
+        } catch (IOException e) {
+            e.printStackTrace(); // 您可能希望適當地記錄例外情況或根據應用程式的需要進行處理
+            return "error"; // 假設 "error" 是表示發生錯誤的邏輯視圖名稱
+        }
+
+        return "success";
+    }
 }
+
