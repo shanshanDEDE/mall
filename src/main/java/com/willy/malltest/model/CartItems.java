@@ -7,22 +7,22 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "CartItems")
+@Table(name = "cart_items")
 public class CartItems {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "cart_item_id")
     private Integer cartItemId;
 
-    @Column
+    @Column(name = "quantity")
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "UserID")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "SpecID", referencedColumnName = "specID")
+    @JoinColumn(name = "spec_id")
     private ProductSpec productSpec;
 }

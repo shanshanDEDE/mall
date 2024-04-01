@@ -1,17 +1,18 @@
 package com.willy.malltest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "Users")
-
+@Table(name = "users")
 public class User {
 
     public User() {
@@ -25,50 +26,51 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UserID")
-    private Long UserID;
+    @Column(name = "user_id")
+    private Long userId;
 
     @OneToMany(mappedBy = "user")
-    private Set<ThirdParty> thirdParty = new HashSet<>();
+    private List<ThirdParty> thirdParty = new ArrayList<>();
 
-    @Column(name = "UserName")
-    private String username;
-    @Column(name = "Email")
+    @Column(name = "user_name")
+    private String userName;
+    @Column(name = "email")
     private String email;
-    @Column(name = "Password")
+    @Column(name = "password")
     private String password;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss EE") // 在 Java 環境內的時間格式(輸入時調整)
-    @Column(name = "RegisterDate")
-    private Date RegisterDate;
+    @Column(name = "register_date")
+    private Date registerDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss EE") // 在 Java 環境內的時間格式(輸入時調整)
-    @Column(name = "LastloginTime")
-    private Date LastLoginTime;
+    @Column(name = "last_login_time")
+    private Date lastLoginTime;
 
-    @Column(name = "UserAddress")
-    private String UserAddress;
-    @Column(name = "DeliverAddress")
-    private String DeliverAddress;
-    @Column(name = "Phone")
-    private String Phone;
-    @Column(name = "Authentication")
-    private Integer Authentication;
+    @Column(name = "user_address")
+    private String userAddress;
+    @Column(name = "deliver_address")
+    private String deliverAddress;
+    @Column(name = "phone")
+    private String phone;
+    @Column(name = "authentication")
+    private Integer authentication;
 
-    @OneToMany(mappedBy = "userID", cascade = CascadeType.ALL)
-    private Set<Orders> orders = new HashSet<>();
-    public void add(Orders order) {
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Orders> orders = new ArrayList<>();
 
-        if (order != null) {
 
-            if (orders == null) {
-                orders = new HashSet<>();
-            }
+    //test
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Track> track;
 
-            orders.add(order);
-            order.setUserID(this);
-        }
-    }
+    //test
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<CustomerFeedback> customerFeedback;
+
 }

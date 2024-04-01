@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "Track")
+@Table(name = "track")
 public class Track {
 
 //    @Id
@@ -27,16 +27,21 @@ public class Track {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "TrackID")
-    private Integer  trackID;
+    @Column(name = "track_id")
+    private Integer trackID;
 
-//    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
-    private User user;
 
-//    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SpecID", referencedColumnName = "SpecID")
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
+//    private User user;
+
+
+    @ManyToOne
+    @JoinColumn(name = "spec_id", referencedColumnName = "spec_id")
     private ProductSpec productSpec;
+
+    //test
+    @ManyToOne
+    @JoinColumn(name = "user_Id")
+    private User user;
 }

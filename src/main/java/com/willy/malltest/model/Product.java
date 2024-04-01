@@ -1,66 +1,69 @@
 package com.willy.malltest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 public class Product {
     @Id
-    @Column(name = "ProductID", nullable = false, unique = true)
-    private String productID;
+    @Column(name = "product_id")
+    private String productId;
 
-    @Column(name = "ProductDescription", nullable = false)
+    @Column(name = "product_description")
     private String productDescription;
 
-    @Column(name = "ProductName", nullable = false)
+    @Column(name = "product_name")
     private String productName;
 
-    // @ManyToOne(fetch = FetchType.LAZY)   //延遲加載
-    @Column(name = "CategoryID",insertable=false, updatable=false, nullable = false)
-    private String categoryID;
+//    @Column(name = "CategoryID", nullable = false)
+//    private String categoryID;
 
-    @Column(name = "Price", nullable = false)
+    @Column(name = "price")
     private int price;
 
-    @Column(name = "Capacity")
+    @Column(name = "capacity")
     private String capacity;
 
-    @Column(name = "Chip")
+    @Column(name = "chip")
     private String chip;
 
-    @Column(name = "Wifi")
+    @Column(name = "wifi")
     private String wifi;
 
-    @Column(name = "Size")
+    @Column(name = "size")
     private String size;
 
-    @Column(name = "CPU")
+    @Column(name = "cpu")
     private String cpu;
 
-    @Column(name = "Memory")
+    @Column(name = "memory")
     private String memory;
 
-    @Column(name = "ProductDisk")
+    @Column(name = "product_disk")
     private String productDisk;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "SetupDate", nullable = false)
+    @Column(name = "setup_date")
     private Date setupDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "ModifyDate", nullable = false)
+    @Column(name = "modify_date")
     private Date modifyDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)   //延遲加載
-    @JoinColumn(name = "CategoryID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY) //延遲加載
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ProductSpec> productSpecs= new ArrayList<>();
+    @JsonIgnore
+    @OneToMany( mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductSpec> productSpecs = new ArrayList<>();
 }

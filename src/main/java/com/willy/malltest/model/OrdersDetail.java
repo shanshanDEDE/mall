@@ -1,34 +1,45 @@
 package com.willy.malltest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
+
 @Entity
 @Getter
 @Setter
-@Table(name = "OrdersDetail")
+@Table(name = "orders_detail")
 public class OrdersDetail {
 
     @Id
-    @Column(name = "OrdersDetailID")
+    @Column(name = "orders_detail_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer ordersDetailID;  //PRIMARY KEY identity(1,1),
-
-    @Column(name = "OrderID", insertable = false, updatable = false)
-    private Integer orderID;  //foreign key
-
-    @Column(name = "SpecID", insertable = false, updatable = false)
-    private String specID;  //foreign key
-
-    @Column(name = "Quantity")
-    private int quantity;
-
-    @Column(name = "Price")
-    private int price;
+    private Integer ordersDetailId;  //PRIMARY KEY identity(1,1),
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "OrderID", referencedColumnName = "OrderID")
+    @JoinColumn(name = "order_id")
     private Orders orders;
+
+    @ManyToOne
+    @JoinColumn(name = "spec_id")
+    private ProductSpec productSpec;
+
+    @Column(name = "quantity")
+    private int quantity;
+
+    @Column(name = "price")
+    private int price;
+
+    @OneToOne(mappedBy = "ordersDetail")
+    private ReturnDetails returnDetails;
+
+    //test
+    @OneToMany(mappedBy = "ordersDetails")
+    @JsonIgnore
+    private List<CustomerFeedback> customerFeedback;
+
 
 }

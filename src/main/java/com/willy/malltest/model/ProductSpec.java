@@ -1,42 +1,65 @@
 package com.willy.malltest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 @Getter
 @Setter
 @Entity
-@Table(name = "ProductSpec")
+@Table(name = "product_spec")
+@JsonIgnoreProperties({"product"})  // 忽略代理對象中的 product 屬性
 public class ProductSpec {
-    public ProductSpec() {
-        super();
-    }
 
-    public ProductSpec(String productSpecId) {
-        super();
-    }
     @Id
-    @Column(name = "SpecID", nullable = false, unique = true)
-    private String specID;
+    @Column(name = "spec_id")
+    private String specId;
 
-    @Column(name = "ProductID", insertable = false, updatable = false, nullable = false)
+    @Column(name = "product_id", insertable = false, updatable = false, nullable = false)
     private String productId;
 
-    @Column(name = "Color", nullable = false)
+    @Column(name = "color", nullable = false)
     private String color;
 
-    @Column(name = "StockQuantity", nullable = false)
+    @Column(name = "stock_quantity")
     private int stockQuantity;
 
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "productSpec")
+    private List<CartItems> cartItems = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "productPhotoSpec")
+    private List<ProductPhoto> productPhotos = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "productSpec")
+    private List<Track> tracks = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "productSpec")
+    private List<OrdersDetail> ordersDetails = new ArrayList<>();
+
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ProductID")
+    @JoinColumn(name = "product_id")
     private Product product;
 
+//    //test
+//    @OneToMany(mappedBy = "productSpec",fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<Track> track;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "productSpec", cascade = CascadeType.ALL)
-    private List<ProductPhoto> productPhotos = new ArrayList<>();
+//    //test
+//    @OneToMany(mappedBy = "productPhotoSpec",fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<ProductPhoto> productPhoto;
 }

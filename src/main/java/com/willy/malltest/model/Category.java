@@ -1,27 +1,31 @@
 package com.willy.malltest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Getter
 @Setter
-@Table(name = "Category")
+@Table
 public class Category {
 
     @Id
-    @Column(name = "CategoryID", nullable = false, length = 36)
+    @Column(name = "category_id")
     private String categoryId;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private Set<Product> products = new HashSet<>();
-
-    @Column(name = "CategoryName", nullable = false, length = 50)
+    @Column(name = "category_name")
     private String categoryName;
+
+
+    @OneToMany(mappedBy = "category")
+    @JsonIgnore
+    private List<Product> products = new ArrayList<>();
 
     public Category() {
     }
