@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("/api")
 @RestController
+@CrossOrigin(allowCredentials = "true")
 public class OrdersManagementController {
 
     @Autowired

@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User updateLastloginTime(Long id) {
-        User user = userRepository.findByUserID(id);
+        User user = userRepository.findByUserId(id);
 
         Date currentDate = new Date();
         user.setLastLoginTime(currentDate);

@@ -12,8 +12,8 @@ public class ThirdParty {
     private String ProviderID;
     @Column(name = "ProviderName")
     private String ProviderName;
-    @Column(name = "UserID",insertable=false, updatable=false)
-    private Long UserID;
+    @Column(name = "UserId",insertable=false, updatable=false)
+    private Long UserId;
 
 
     @ManyToOne(fetch = FetchType.LAZY) // 指定多对一关系

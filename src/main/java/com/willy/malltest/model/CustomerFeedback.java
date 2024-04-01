@@ -23,7 +23,7 @@ public class CustomerFeedback {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
+    @JoinColumn(name = "UserId", referencedColumnName = "UserId")
     private User user;
 
     @JsonIgnore
