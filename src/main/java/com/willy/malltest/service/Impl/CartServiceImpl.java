@@ -62,7 +62,7 @@ public class CartServiceImpl implements CartService {
 
             ProductPhoto productPhoto= new ProductPhoto();
 
-            List<ProductPhoto> productPhotos = productPhoto.getSpecID().getProductPhotos();
+            List<ProductPhoto> productPhotos = productPhoto.getProductPhotoSpec().getProductPhotos();
             if (productPhotos != null && productPhotos.size() != 0) {
                 ProductPhoto firstPhoto = productPhotos.get(0);
                 cartItemDto.setProductPhotoId(firstPhoto.getPhotoID());

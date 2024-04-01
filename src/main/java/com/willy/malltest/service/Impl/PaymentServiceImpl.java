@@ -3,12 +3,15 @@ package com.willy.malltest.service.Impl;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
+import com.willy.malltest.model.Payment;
 import com.willy.malltest.repository.PaymentRepository;
 import com.willy.malltest.requestmodels.PaymentInfoRequest;
 import com.willy.malltest.service.PaymentService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,5 +40,14 @@ public class PaymentServiceImpl implements PaymentService {
         params.put("currency", paymentInfoRequest.getCurrency());
         params.put("payment_method_types", paymentMethodTypes);
         return PaymentIntent.create(params);
+    }
+    public ResponseEntity<String> stripePayment(String email) throws Exception{
+        Payment payment = paymentRepository.findByEmail(email);
+        if (payment != null) {
+            throw new Exception("Payment information is missing");
+        }
+        payment.setAmount(00.00);
+        paymentRepository.save(payment);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

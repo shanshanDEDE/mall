@@ -1,7 +1,8 @@
-package com.willy.malltest.service;
+package com.willy.malltest.service.Impl;
 
 import com.willy.malltest.model.User;
 import com.willy.malltest.repository.UsersRepository;
+import com.willy.malltest.service.MailService;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.util.Random;
 
 
 @Service
-public class MailServiceImpl implements MailService{
+public class MailServiceImpl implements MailService {
 
     @Autowired
     private JavaMailSender mailSender;

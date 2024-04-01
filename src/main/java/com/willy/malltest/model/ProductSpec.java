@@ -22,6 +22,15 @@ public class ProductSpec {
     @Column(name = "spec_id")
     private String specId;
 
+    public ProductSpec() {
+        super();
+    }
+
+    public ProductSpec(String specId) {
+        super();
+        this.specId = specId;
+    }
+
     @Column(name = "product_id", insertable = false, updatable = false, nullable = false)
     private String productId;
 
