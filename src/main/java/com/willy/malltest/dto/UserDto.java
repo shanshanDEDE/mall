@@ -1,8 +1,11 @@
 package com.willy.malltest.dto;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Data;
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import java.util.Date;
@@ -10,16 +13,16 @@ import java.util.Date;
 @Data
 public class UserDto {
 
-    private Long UserId;
-    private String username;
+    private Long userId;
+    private String userName;
     private String email;
     private String password;
-    private Date RegisterDate;
-    private Date LastLoginTime;
-    private String UserAddress;
-    private String DeliverAddress;
-    private String Phone;
-    private Integer Authentication;
+    private Date registerDate;
+    private Date lastLoginTime;
+    private String userAddress;
+    private String deliverAddress;
+    private String phone;
+    private Integer authentication;
 
 
 }
