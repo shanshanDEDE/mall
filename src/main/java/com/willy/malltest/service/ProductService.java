@@ -79,7 +79,7 @@ public class ProductService {
         return productPhotoRepository.save(productPhoto);
     }
 
-    public  List<ProductPhoto> selectAllProductPhoto(String productId) {
+    public  List<ProductPhoto> findAllProductPhotos() {
         return  productPhotoRepository.findAll();
     }
 

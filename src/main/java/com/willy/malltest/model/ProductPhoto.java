@@ -14,7 +14,7 @@ public class ProductPhoto {
     @Id
     @Column(name = "photo_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer photoID;
+    private Integer photoId;
 
     @Lob
     @Column(name = "photo_file")

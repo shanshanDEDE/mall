@@ -8,12 +8,19 @@ import com.willy.malltest.model.ProductPhoto;
 import com.willy.malltest.model.ProductSpec;
 import com.willy.malltest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(allowCredentials = "true", origins = {"http://localhost:5173/", "http://127.0.0.1:5173"})
@@ -168,5 +175,21 @@ public class ProductController {
 
         return "success";
     }
+
+
+    // 獲取所有產品圖片的 Controller 端
+    @GetMapping("/photos/image/{photoId}")
+    public ResponseEntity<byte[]> downloadImage(@PathVariable Integer photoId) {
+
+        ProductPhoto photos = productService.findProductPhotoByPhotoId(photoId);
+
+        byte[] photoByte = photos.getPhotoFile();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+
+        return new ResponseEntity<byte[]>(photoByte, headers, HttpStatus.OK);
+    }
+
 }
 
