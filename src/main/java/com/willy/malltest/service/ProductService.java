@@ -1,5 +1,6 @@
 package com.willy.malltest.service;
 
+import com.willy.malltest.model.Category;
 import com.willy.malltest.model.Product;
 import com.willy.malltest.model.ProductPhoto;
 import com.willy.malltest.model.ProductSpec;
@@ -19,7 +20,7 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-
+    @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
     private ProductSpecRepository productSpecRepository;
@@ -34,7 +35,8 @@ public class ProductService {
 
     //
     public List<Product> getProductByCategoryId(String categoryId) {
-        return productRepository.findByCategoryCategoryId(categoryId);
+        Category category = categoryRepository.findByCategoryId(categoryId);
+        return productRepository.findProductsByCategory(category);
     }
 
     public Product findProductById(String productId) {
@@ -63,12 +65,10 @@ public class ProductService {
     public List<ProductSpec> findProductSpecByProductId(String productId) {
         Product product = productRepository.findProductsByProductId(productId);
         return productSpecRepository.findProductSpecByProduct(product);
-
-
     }
 
     public List<ProductPhoto> findProductPhotoByproductSpecId(String productSpecId) {
-        ProductSpec productSpec=productSpecRepository.findProductSpecBySpecId(productSpecId);
+        ProductSpec productSpec = productSpecRepository.findProductSpecBySpecId(productSpecId);
 
 
         return productPhotoRepository.findProductPhotoByProductSpec(productSpec);
@@ -79,11 +79,11 @@ public class ProductService {
         return productPhotoRepository.save(productPhoto);
     }
 
-    public  List<ProductPhoto> findAllProductPhotos() {
-        return  productPhotoRepository.findAll();
+    public List<ProductPhoto> findAllProductPhotos() {
+        return productPhotoRepository.findAll();
     }
 
-    public  ProductPhoto findProductPhotoByPhotoId(Integer photoId) {
+    public ProductPhoto findProductPhotoByPhotoId(Integer photoId) {
         Optional<ProductPhoto> optional = productPhotoRepository.findById(photoId);
 
         return optional.orElse(null);
@@ -93,5 +93,7 @@ public class ProductService {
 
         return productSpecRepository.findProductSpecBySpecId(specId);
     }
+
+
 }
 

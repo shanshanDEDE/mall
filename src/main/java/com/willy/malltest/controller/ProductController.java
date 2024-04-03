@@ -1,26 +1,22 @@
 package com.willy.malltest.controller;
 
 
-import ch.qos.logback.core.model.Model;
 import com.willy.malltest.model.Category;
 import com.willy.malltest.model.Product;
 import com.willy.malltest.model.ProductPhoto;
 import com.willy.malltest.model.ProductSpec;
 import com.willy.malltest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(allowCredentials = "true", origins = {"http://localhost:5173/", "http://127.0.0.1:5173"})
@@ -35,36 +31,29 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @GetMapping("/products/getProductByCategoryId")
+//    @GetMapping("/products/getProductByCategoryId")
+//
+//    public List<Product> getProductByCategoryId(@RequestParam String categoryId) {
+//        return productService.getProductByCategoryId(categoryId);
+//    }
 
+    @GetMapping("/products/getProductByCategoryId")
     public List<Product> getProductByCategoryId(@RequestParam String categoryId) {
-        return productService.getProductByCategoryId(categoryId);
+        List<Product> products = productService.getProductByCategoryId(categoryId);
+        List<Product> filteredProducts = new ArrayList<>();
+
+        for (Product product : products) {
+            if (product.getSalesStatus() != null && product.getSalesStatus() == 1) {
+                filteredProducts.add(product);
+            }
+        }
+
+        return filteredProducts;
     }
 
     @GetMapping("/products/getProductById")
     public Product getProductById(String productId) {
         return productService.findProductById(productId);
-    }
-
-//    @PostMapping("/products/insertProduct")
-//    public Product insertProduct(@RequestBody Product product) {
-//        return productService.insertProduct(product);
-//    }
-
-    @PostMapping("/products/insertExm")
-    public Product insertExm() {
-        Category cat = new Category("A", "iPhone");
-
-        Product pro = new Product();
-        pro.setProductId("A1402");
-        pro.setProductName("iPhone 14 128G");
-        pro.setProductDescription("6.1 吋 2,532 x 1,170pixels 解析度超 Retina XDR 顯示器，搭載 OLED 螢幕面板，支援原彩顯示、電影級 P3 標準廣色域；顯示 HDR 內容時，螢幕亮度最高可達 1,200nits。");
-        pro.setCategory(cat);
-
-        pro.setPrice(25900);
-        pro.setModifyDate(new Date());
-        pro.setSetupDate(new Date());
-        return productService.insertProduct(pro);
     }
 
     @PostMapping("/products/insertPhone")
@@ -74,6 +63,7 @@ public class ProductController {
         System.out.println(new Date());
         p.setSetupDate(new Date());
         p.setModifyDate(new Date());
+        p.setSalesStatus(1);
         return productService.insertProduct(p);
     }
 
@@ -84,6 +74,7 @@ public class ProductController {
         System.out.println(new Date());
         p.setSetupDate(new Date());
         p.setModifyDate(new Date());
+        p.setSalesStatus(1);
         return productService.insertProduct(p);
     }
 
@@ -94,6 +85,7 @@ public class ProductController {
         System.out.println(new Date());
         p.setSetupDate(new Date());
         p.setModifyDate(new Date());
+        p.setSalesStatus(1);
         return productService.insertProduct(p);
     }
 
@@ -157,7 +149,7 @@ public class ProductController {
 
 
     @PostMapping("/products/insertProductPhoto")
-    public String insertProductPhoto(@RequestParam String specId, @RequestBody MultipartFile file, Model model) {
+    public String insertProductPhoto(@RequestParam String specId, @RequestBody MultipartFile file) {
 
         try {
             if (file.isEmpty()) {
@@ -191,5 +183,29 @@ public class ProductController {
         return new ResponseEntity<byte[]>(photoByte, headers, HttpStatus.OK);
     }
 
+    @PutMapping("/products/productSalesStatus")
+    public Product productSalesStatus(@RequestParam String productId, @RequestParam Integer salesStatus) {
+        Product product = productService.findProductById(productId);
+        product.setSalesStatus(salesStatus);
+        productService.saveProduct(product);
+        return product;
+    }
+
+    @GetMapping("/showAll")
+    public ResponseEntity<MultiValueMap<String, Object>> showAllPhotos() {
+        List<ProductPhoto> photos = productService.findAllProductPhotos();
+        if (photos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        for (ProductPhoto photo : photos) {
+            byte[] photoByte = photo.getPhotoFile();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            body.add("photo", new HttpEntity<>(photoByte, headers));
+        }
+        return ResponseEntity.ok().body(body);
+    }
 }
 
