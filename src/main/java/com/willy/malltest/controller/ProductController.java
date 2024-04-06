@@ -1,10 +1,7 @@
 package com.willy.malltest.controller;
 
 
-import com.willy.malltest.model.Category;
-import com.willy.malltest.model.Product;
-import com.willy.malltest.model.ProductPhoto;
-import com.willy.malltest.model.ProductSpec;
+import com.willy.malltest.model.*;
 import com.willy.malltest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -24,6 +21,7 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    private Product product;
 
 
     @GetMapping("/products/getAllProducts")
@@ -43,7 +41,8 @@ public class ProductController {
         List<Product> filteredProducts = new ArrayList<>();
 
         for (Product product : products) {
-            if (product.getSalesStatus() != null && product.getSalesStatus() == 1) {
+//            && product.getSalesStatus() == 1
+            if (product.getSalesStatus() != null) {
                 filteredProducts.add(product);
             }
         }
@@ -156,6 +155,7 @@ public class ProductController {
                 return "ProductPhoto is empty";
             }
 
+
             ProductPhoto productPhoto = new ProductPhoto();
             productPhoto.setPhotoFile(file.getBytes());
             productPhoto.setProductSpec(productService.findProductSpecBySpecId(specId));
@@ -184,9 +184,16 @@ public class ProductController {
     }
 
     @PutMapping("/products/productSalesStatus")
-    public Product productSalesStatus(@RequestParam String productId, @RequestParam Integer salesStatus) {
+    public Product productSalesStatus(@RequestParam String productId) {
         Product product = productService.findProductById(productId);
-        product.setSalesStatus(salesStatus);
+        if (product.getSalesStatus() == 1) {
+            product.setSalesStatus(0);
+            product.setModifyDate(new Date());
+        } else {
+            product.setSalesStatus(1);
+            product.setModifyDate(new Date());
+        }
+
         productService.saveProduct(product);
         return product;
     }
@@ -207,5 +214,21 @@ public class ProductController {
         }
         return ResponseEntity.ok().body(body);
     }
+
+    @PostMapping("/products/insertProductSpec")
+    public ProductSpec insertProductSpec(@RequestBody ProductSpec productSpec, @RequestParam String productId) {
+        Product product = productService.findProductById(productId);
+        productSpec.setProduct(product);
+        return productService.insertProductSpec(productSpec);
+    }
+    @PutMapping("/products/updateProductSpec")
+    public String updateProductSpec(@RequestParam String specId, @RequestParam Integer stockQuantity) {
+        ProductSpec productSpec = productService.findProductSpecBySpecId(specId);
+        productSpec.setStockQuantity(stockQuantity);
+        productService.updateProductSpec(productSpec);
+        return "success";
+
+    }
 }
+
 

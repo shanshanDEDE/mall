@@ -83,6 +83,10 @@ public class ProductService {
         return productPhotoRepository.findAll();
     }
 
+    public ProductSpec insertProductSpec(ProductSpec productSpec) {
+        return productSpecRepository.save(productSpec);
+    }
+
     public ProductPhoto findProductPhotoByPhotoId(Integer photoId) {
         Optional<ProductPhoto> optional = productPhotoRepository.findById(photoId);
 
@@ -90,8 +94,11 @@ public class ProductService {
     }
 
     public ProductSpec findProductSpecBySpecId(String specId) {
-
         return productSpecRepository.findProductSpecBySpecId(specId);
+    }
+
+    public ProductSpec updateProductSpec(ProductSpec productSpec) {
+        return productSpecRepository.save(productSpec);
     }
 
 
