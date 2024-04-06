@@ -42,7 +42,7 @@ public class ProductController {
 
         for (Product product : products) {
 //            && product.getSalesStatus() == 1
-            if (product.getSalesStatus() != null) {
+            if (product.getSalesStatus() != null ) {
                 filteredProducts.add(product);
             }
         }
@@ -216,9 +216,7 @@ public class ProductController {
     }
 
     @PostMapping("/products/insertProductSpec")
-    public ProductSpec insertProductSpec(@RequestBody ProductSpec productSpec, @RequestParam String productId) {
-        Product product = productService.findProductById(productId);
-        productSpec.setProduct(product);
+    public ProductSpec insertProductSpec(@RequestBody ProductSpec productSpec) {
         return productService.insertProductSpec(productSpec);
     }
     @PutMapping("/products/updateProductSpec")
@@ -227,8 +225,14 @@ public class ProductController {
         productSpec.setStockQuantity(stockQuantity);
         productService.updateProductSpec(productSpec);
         return "success";
-
     }
+    @DeleteMapping("/products/deleteProduct")
+    public String deleteProduct(@RequestParam String productId) {
+        productService.deleteProduct(productId);
+        return "success";
+    }
+
+
 }
 
 

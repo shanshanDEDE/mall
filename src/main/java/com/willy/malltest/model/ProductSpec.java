@@ -26,6 +26,9 @@ public class ProductSpec {
     @Column(name = "stock_quantity")
     private int stockQuantity;
 
+    @Column(name = "deleted")
+    private boolean deleted;
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "productSpec")

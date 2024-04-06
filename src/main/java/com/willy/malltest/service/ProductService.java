@@ -84,6 +84,10 @@ public class ProductService {
     }
 
     public ProductSpec insertProductSpec(ProductSpec productSpec) {
+        String specId=productSpec.getSpecId();
+        Product product=productRepository.findProductsByProductId(specId.substring(0,5));
+        productSpec.setDeleted(false);
+        productSpec.setProduct(product);
         return productSpecRepository.save(productSpec);
     }
 
@@ -99,6 +103,11 @@ public class ProductService {
 
     public ProductSpec updateProductSpec(ProductSpec productSpec) {
         return productSpecRepository.save(productSpec);
+    }
+
+    public void deleteProduct(String productId) {
+        Product product = productRepository.findProductsByProductId(productId);
+        productRepository.delete(product);
     }
 
 
