@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.thymeleaf.util.StringUtils.substring;
+
 @RestController
 @CrossOrigin(allowCredentials = "true", origins = {"http://localhost:5173/", "http://127.0.0.1:5173"})
 public class ProductController {
@@ -229,9 +231,21 @@ public class ProductController {
     @DeleteMapping("/products/deleteProduct")
     public String deleteProduct(@RequestParam String productId) {
         productService.deleteProduct(productId);
-        return "success";
+        return "success delete product";
     }
 
+    @DeleteMapping("/products/deleteProductSpec")
+    public String deleteProductSpec(@RequestParam String specId) {
+        productService.deleteProductSpec(specId);
+        return "success delete productSpec";
+    }
+
+    @PutMapping("/products/changeStockQuantity")
+    public String changeStockQuantity(@RequestParam String specId, @RequestParam Integer stockQuantity) {
+    productService.changeStockQuantity(specId, stockQuantity);
+
+        return "success change stockQuantity";
+    }
 
 }
 

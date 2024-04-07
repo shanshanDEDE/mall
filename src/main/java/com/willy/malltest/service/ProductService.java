@@ -110,6 +110,22 @@ public class ProductService {
         productRepository.delete(product);
     }
 
+    public void deleteProductSpec(String specId) {
+        ProductSpec productSpec = productSpecRepository.findProductSpecBySpecId(specId);
+        productSpecRepository.delete(productSpec);
+    }
+
+    public void changeStockQuantity(String specId, int quantity) {
+        Product product = productRepository.findProductsByProductId(specId.substring(0,5));
+        ProductSpec productSpec = productSpecRepository.findProductSpecBySpecId(specId);
+        productSpec.setProduct(product);
+        productSpec.setStockQuantity(quantity);
+        productSpecRepository.save(productSpec);
+
+    }
+
 
 }
+
+
 
