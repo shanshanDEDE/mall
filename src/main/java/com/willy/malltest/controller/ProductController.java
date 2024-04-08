@@ -218,8 +218,10 @@ public class ProductController {
     }
 
     @PostMapping("/products/insertProductSpec")
-    public ProductSpec insertProductSpec(@RequestBody ProductSpec productSpec) {
-        return productService.insertProductSpec(productSpec);
+    public String insertProductSpec(@RequestBody ProductSpec productSpec) {
+        productService.insertProductSpec(productSpec);
+       String specId=productSpec.getSpecId();
+        return "success insert productSpec";
     }
     @PutMapping("/products/updateProductSpec")
     public String updateProductSpec(@RequestParam String specId, @RequestParam Integer stockQuantity) {
