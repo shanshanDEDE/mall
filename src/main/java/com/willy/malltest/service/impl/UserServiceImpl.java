@@ -1,10 +1,11 @@
-package com.willy.malltest.service;
+package com.willy.malltest.service.impl;
 
 import com.willy.malltest.dto.UserDto;
 import com.willy.malltest.model.ThirdParty;
 import com.willy.malltest.model.User;
 import com.willy.malltest.repository.ThirdPartyRepository;
 import com.willy.malltest.repository.UsersRepository;
+import com.willy.malltest.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     private UsersRepository userRepository;
 
