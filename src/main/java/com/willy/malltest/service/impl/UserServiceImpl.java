@@ -94,6 +94,7 @@ public class UserServiceImpl implements UserService {
         updateLastloginTime(dbUser.getUserId());
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(dbUser,userDto);
+
         return userDto;
     }
 

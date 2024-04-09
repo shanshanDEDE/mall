@@ -41,6 +41,8 @@ public class LineOAuth2NativeHttpController {
     public String lineLogin(HttpServletResponse response) {
 
         // LINE 登入的授權端點
+//        String authUrl = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2004545031&redirect_uri=\n" +
+//                "https://localhost:8080/mall/line-callback&state=login&scope=openid%20profile";
         String authUrl = "https://access.line.me/oauth2/v2.1/authorize?" +
                 "response_type=code" +
                 "&client_id=" + lineOauthConfig.getClientId() +
