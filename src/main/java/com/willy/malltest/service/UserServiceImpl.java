@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -110,5 +110,57 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
+    @Override
+    @Transactional
+    public UserDto addAdmin(String id, String name, String email) {
+        User user = new User();
+        user.setUserName(name);
+        user.setEmail(email);
+        user.setAuthentication(0);
+        Date today = new Date();
+        user.setRegisterDate(today);
+        user.setLastLoginTime(today);
+
+        ThirdParty thirdParty = new ThirdParty();
+        thirdParty.setProviderId(id);
+        thirdParty.setProviderName(name);
+        thirdParty.setUser(user);
+
+        userRepository.save(user);
+        thirdPartyRepository.save(thirdParty);
+
+        User dbUser = userRepository.findByEmail(email);
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(dbUser,userDto);
+        return userDto;
+    }
+
+    public User banUser(Long id) {
+        User user = userRepository.findByUserId(id);
+        user.setAuthentication(3);
+        userRepository.save(user);
+        return user;
+    }
+
+    public User unbanUser(Long id) {
+        User user = userRepository.findByUserId(id);
+        user.setAuthentication(2);
+        userRepository.save(user);
+        return user;
+    }
+
+    public String deleteUser(Long id) {
+        userRepository.deleteById(id);
+        return "delete success NO." + id+" User";
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findByAuthentication(2);
+    }
+
+    public String findEmailById(Long id){
+        User user = userRepository.findByUserId(id);
+        return user.getEmail();
+    }
 
 }

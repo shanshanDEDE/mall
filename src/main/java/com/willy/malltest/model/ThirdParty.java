@@ -1,5 +1,6 @@
 package com.willy.malltest.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ public class ThirdParty {
     @Column(name = "provider_name")
     private String providerName;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY) // 指定多对一关系
     @JoinColumn(name = "user_id") // 指定关联的外键列
     private User user; // 指向 User 类的引用
