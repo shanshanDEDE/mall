@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +18,8 @@ public class EmailController {
     private final EmailService emailService;
     // 使用 ConcurrentHashMap 作為驗證碼的臨時儲存
     private final Map<String, String> verificationCodes = new ConcurrentHashMap<>();
+
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Autowired
     public EmailController(EmailService emailService) {
@@ -33,8 +38,17 @@ public class EmailController {
             // 將驗證碼儲存到內存中
             verificationCodes.put(email, code);
 
+            executor.submit(() -> {
+                try {
+                    emailService.sendSimpleMessage(email, "驗證碼", "您的驗證碼是：" + code);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            });
+
             // 發送註冊郵件
-            emailService.sendSimpleMessage(email, "驗證碼", "您的驗證碼是：" + code);
+//            emailService.sendSimpleMessage(email, "驗證碼", "您的驗證碼是：" + code);
             logger.info("Verification code sent to: {}", email);
 
             return new Result(Result.SUCCESS, "驗證碼已發送至您的信箱");
