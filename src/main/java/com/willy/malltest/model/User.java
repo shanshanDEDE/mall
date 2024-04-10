@@ -3,14 +3,14 @@ package com.willy.malltest.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-@Getter
-@Setter
+
+@Data
 @Entity
 @Table(name = "users")
 public class User {

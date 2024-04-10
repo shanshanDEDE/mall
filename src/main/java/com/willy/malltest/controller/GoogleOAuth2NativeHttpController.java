@@ -108,7 +108,6 @@ public class GoogleOAuth2NativeHttpController {
 
 
 
-            //LoginUserDTO loginUser = new LoginUserDTO(payloadGoogleId, payloadEmail, true);
             UserDto loggedInUser;
             // 將使用者放到資料庫
             boolean isRigister = userService.checkIfUsernameExist(payloadEmail);
