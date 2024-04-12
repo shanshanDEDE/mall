@@ -5,9 +5,11 @@ import com.willy.malltest.dto.CustomerFeedbackDTO;
 import com.willy.malltest.dto.ShowCustomerFeedbackDTO;
 import com.willy.malltest.service.CustomerFeedback;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
@@ -40,6 +42,12 @@ public class CustomerFeedBackController {
     public com.willy.malltest.model.CustomerFeedback updateCustomerFeedbacks(@RequestBody CustomerFeedbackDTO customerFeedbackDTO){
         return customerFeedback.updateFeedbacksDTO(customerFeedbackDTO);
     }
+
+    @PutMapping("/update/customerFeedbacksStatus")
+    public com.willy.malltest.model.CustomerFeedback test(@RequestBody CustomerFeedbackDTO customerFeedbackDTO){
+        return customerFeedback.test(customerFeedbackDTO);
+    }
+
 
     @DeleteMapping("/delete/customerFeedbacks")
     public void deleteCustomerFeedbacks(@RequestBody CustomerFeedbackDTO customerFeedbackDTO){

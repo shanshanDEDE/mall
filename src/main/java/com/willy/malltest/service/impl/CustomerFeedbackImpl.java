@@ -150,7 +150,7 @@ public class CustomerFeedbackImpl implements CustomerFeedback {
         customerFeedback.setType(customerFeedbackDTO.getType());
         customerFeedback.setDescription(customerFeedbackDTO.getDescription());
         customerFeedback.setFeedbackDate(customerFeedbackDTO.getFeedbackDate());
-        customerFeedback.setCustomerFeedbackStatus("處理中");
+        customerFeedback.setCustomerFeedbackStatus("等待回覆中");
 
         return customerFeedbackRepository.save(customerFeedback); // 保存到資料庫中
     }
@@ -174,6 +174,49 @@ public class CustomerFeedbackImpl implements CustomerFeedback {
         return customerFeedbackRepository.save(existingcustomerFeedback); // 保存到資料庫中
 
     }
+
+    @Override
+    @Transactional
+    public com.willy.malltest.model.CustomerFeedback test(CustomerFeedbackDTO customerFeedbackDTO) {
+        com.willy.malltest.model.CustomerFeedback existingcustomerFeedback = customerFeedbackRepository.findById(customerFeedbackDTO.getFeedbackID()).orElse(null);
+
+        if (existingcustomerFeedback == null) {
+            System.out.println("existingcustomerFeedback不存在");
+            return null;
+        }
+        existingcustomerFeedback.setCustomerFeedbackStatus("已結案");
+        System.out.println(existingcustomerFeedback.getCustomerFeedbackStatus());
+        return customerFeedbackRepository.save(existingcustomerFeedback); // 保存到資料庫中
+    }
+
+
+//
+//
+//    @Transactional
+//    public com.willy.malltest.model.CustomerFeedback updateCustomerFeedbacksStatus(CustomerFeedbackDTO customerFeedbackDTO){
+//        com.willy.malltest.model.CustomerFeedback existingcustomerFeedback = customerFeedbackRepository.findById(customerFeedbackDTO.getFeedbackID()).orElse(null);
+//
+//        if (existingcustomerFeedback == null) {
+//            System.out.println("existingcustomerFeedback不存在");
+//            return null;
+//        }
+//        existingcustomerFeedback.setCustomerFeedbackStatus("已結案");
+//
+//        return customerFeedbackRepository.save(existingcustomerFeedback); // 保存到資料庫中
+//
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @Override
     public void deleteCustomerFeedback(CustomerFeedbackDTO customerFeedbackDTO) {
