@@ -87,14 +87,17 @@ public class CustomerFeedbackImpl implements CustomerFeedback {
 
             List<String> productNames = new ArrayList<>();
             List<Integer> prices = new ArrayList<>();
+            List<Integer> quantities = new ArrayList<>();
 
             for (OrdersDetail ordersDetail : customerFeedback.getOrders().getOrdersDetails()) {
                 productNames.add(ordersDetail.getProductSpec().getProduct().getProductName());
                 prices.add(ordersDetail.getProductSpec().getProduct().getPrice());
+                quantities.add(ordersDetail.getQuantity());
             }
 
             showCustomerFeedbacksDTO.setProductNames(productNames);
             showCustomerFeedbacksDTO.setPrices(prices);
+            showCustomerFeedbacksDTO.setQuantities(quantities);
 
             showCustomerFeedbacksDTOs.add(showCustomerFeedbacksDTO);
         }

@@ -18,6 +18,7 @@ public class ShowCustomerFeedbackDTO {
         private String CustomerFeedbackStatus;
         private List<String> productNames; // 改成列表来接收产品名称
         private List<Integer> prices; // 改成列表来接收价格
+        private List<Integer> quantities;
 
 }
 
