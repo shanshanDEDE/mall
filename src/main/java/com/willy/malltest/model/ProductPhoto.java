@@ -13,15 +13,17 @@ public class ProductPhoto {
 
     @Id
     @Column(name = "photo_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer photoId;
 
     @Lob
     @Column(name = "photo_file")
     private byte[] photoFile;
 
-    @ManyToOne
-    @JoinColumn (name = "spec_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "spec_id", referencedColumnName = "spec_id")
     @JsonIgnore
-    private ProductSpec productPhotoSpec;
+    private ProductSpec productSpec;
+
 
 }

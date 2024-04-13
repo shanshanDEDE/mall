@@ -18,14 +18,19 @@ import java.util.List;
 @JsonIgnoreProperties({"product"})  // 忽略代理對象中的 product 屬性
 public class ProductSpec {
 
+    public ProductSpec() {
+        super();
+    }
+    public ProductSpec(String specId) {
+        super();
+        this.specId = specId;
+    }
+
     @Id
     @Column(name = "spec_id")
     private String specId;
 
-    @Column(name = "product_id", insertable = false, updatable = false, nullable = false)
-    private String productId;
-
-    @Column(name = "color", nullable = false)
+    @Column(name = "color")
     private String color;
 
     @Column(name = "stock_quantity")
@@ -37,7 +42,7 @@ public class ProductSpec {
     private List<CartItems> cartItems = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "productPhotoSpec")
+    @OneToMany(mappedBy = "productSpec")
     private List<ProductPhoto> productPhotos = new ArrayList<>();
 
     @JsonIgnore

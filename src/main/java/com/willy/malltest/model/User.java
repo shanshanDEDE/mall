@@ -14,6 +14,15 @@ import java.util.*;
 @Entity
 @Table(name = "users")
 public class User {
+
+    public User() {
+        super();
+    }
+    public User(Long userId){
+        this.userId=userId;
+    }
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
