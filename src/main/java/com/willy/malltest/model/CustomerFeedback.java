@@ -48,12 +48,12 @@ public class CustomerFeedback {
 
     @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @JsonIgnore
+//    @JsonIgnore
     private User user;
 
     @ManyToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    @JsonIgnore
+//    @JsonIgnore
     private Orders orders;
 
     @ManyToOne//(fetch = FetchType.LAZY)

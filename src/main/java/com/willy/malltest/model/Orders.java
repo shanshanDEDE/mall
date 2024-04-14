@@ -58,9 +58,11 @@ public class Orders {
     @Column(name = "payment_time")
     private Date paymentTime;
 
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<OrdersDetail> ordersDetails = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
     private List<CustomerFeedback> customerFeedbacks = new ArrayList<>();
 

@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -155,8 +156,16 @@ public class UserServiceImpl implements UserService{
     }
 
     public List<User> getAllUsers() {
-        return userRepository.findByAuthentication(2);
+        List<User> users = new ArrayList<>();
+        List<User> normalUsers = userRepository.findByAuthentication(2);
+        List<User> bannedUsers = userRepository.findByAuthentication(3);
+
+        users.addAll(normalUsers);
+        users.addAll(bannedUsers);
+
+        return users;
     }
+
 
     public String findEmailById(Long id){
         User user = userRepository.findByUserId(id);

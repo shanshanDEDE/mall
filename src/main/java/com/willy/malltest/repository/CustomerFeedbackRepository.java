@@ -26,4 +26,9 @@ public interface CustomerFeedbackRepository extends JpaRepository<CustomerFeedba
 //    User findByfeedbackId(Integer feedbackID);
 
     CustomerFeedback findByFeedbackID(Integer feedbackID);
+
+    @Query(value = "SELECT * FROM customer_feedback", nativeQuery = true)
+    List<CustomerFeedback> findAllFeedbacks();
 }
+
+

@@ -74,4 +74,14 @@ public class CustomerFeedBackController {
         return "success send email! FeedbackId: " + feedbackId;
     }
 
+    @PutMapping("sendFeedbackEmailAndUpdate")
+    public String sendFeedbackEmailAndUpdate(@RequestParam Integer feedbackId,@RequestBody String message) {
+        try {
+            mailService.sendFeedbackEmailReturn(feedbackId, message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        return "success send email! FeedbackId: " + feedbackId;
+    }
+
 }

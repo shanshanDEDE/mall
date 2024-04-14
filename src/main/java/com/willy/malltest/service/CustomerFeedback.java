@@ -18,4 +18,6 @@ public interface CustomerFeedback {
     public com.willy.malltest.model.CustomerFeedback updateFeedbacksDTO(CustomerFeedbackDTO customerFeedbackDTO);
 
     public void deleteCustomerFeedback(CustomerFeedbackDTO customerFeedbackDTO);
+
+
 }

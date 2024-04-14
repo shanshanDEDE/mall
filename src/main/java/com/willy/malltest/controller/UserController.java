@@ -15,7 +15,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:5173/", "http://127.0.0.1:5173"})
+@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:5173", "http://127.0.0.1:5173"})
 public class UserController {
 
     @Autowired
@@ -23,6 +23,7 @@ public class UserController {
 
     @Autowired
     private MailService mailService;
+
     private User user;
 
 
@@ -130,15 +131,16 @@ public class UserController {
     }
 
     @PutMapping("/banUser")
-    public User banUser(@RequestParam("id") Long id) {
+    public String banUser(@RequestParam("id") Long id) {
 
-        return userService.banUser(id);
+        User user= userService.banUser(id);
+       return "UserName:"+user.getUserName()+ " success ban!";
     }
 
     @PutMapping("/unbanUser")
-    public User unbanUser(@RequestParam("id") Long id) {
-
-        return userService.unbanUser(id);
+    public String unbanUser(@RequestParam("id") Long id) {
+        User user=userService.unbanUser(id);
+        return "UserName:"+user.getUserName()+ " success restore!";
     }
 
     @DeleteMapping("/deleteUser")
