@@ -11,6 +11,8 @@ public interface TrackService {
     public List<TrackDTO> getAllTrackDTOs();
 
     public List<TrackShowDTO> getShowTrackDTOs(Long userId);
+    public boolean getCheckTrackDTO(Long userId,String specId);
+
 
     public Track addTrack(String specID, Long userId);
 

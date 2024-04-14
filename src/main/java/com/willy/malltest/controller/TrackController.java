@@ -25,6 +25,10 @@ public class TrackController {
     public List<TrackShowDTO> getShowTrackDTOs(@RequestParam Long userId){
         return trackService.getShowTrackDTOs(userId);
     }
+    @GetMapping("/check/track")
+    public boolean getShowTrackDTOs(@RequestParam Long userId,@RequestParam String specId){
+        return trackService.getCheckTrackDTO(userId,specId);
+    }
 
     @PostMapping("/create/track")
     public Track creatTrack(@RequestBody TrackDTO trackDTO){
