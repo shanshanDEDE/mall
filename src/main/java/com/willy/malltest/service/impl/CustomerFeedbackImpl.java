@@ -78,12 +78,14 @@ public class CustomerFeedbackImpl implements CustomerFeedback {
 
             showCustomerFeedbacksDTO.setFeedbackID(customerFeedback.getFeedbackID());
             showCustomerFeedbacksDTO.setUserID(customerFeedback.getUser().getUserId());
-            showCustomerFeedbacksDTO.setOrderID(customerFeedback.getOrders().getOrderId());
             showCustomerFeedbacksDTO.setType(customerFeedback.getType());
             showCustomerFeedbacksDTO.setFeedbackDate(customerFeedback.getFeedbackDate());
             showCustomerFeedbacksDTO.setDescription(customerFeedback.getDescription());
             showCustomerFeedbacksDTO.setCustomerFeedbackStatus(customerFeedback.getCustomerFeedbackStatus());
 
+            Orders orders = customerFeedback.getOrders();
+            if (orders != null) {  // 檢查 orders 是否為 null
+                showCustomerFeedbacksDTO.setOrderID(orders.getOrderId());
 
             List<String> productNames = new ArrayList<>();
             List<Integer> prices = new ArrayList<>();
@@ -98,6 +100,10 @@ public class CustomerFeedbackImpl implements CustomerFeedback {
             showCustomerFeedbacksDTO.setProductNames(productNames);
             showCustomerFeedbacksDTO.setPrices(prices);
             showCustomerFeedbacksDTO.setQuantities(quantities);
+            } else {
+                // 可以設置為預設值或處理 null 的情況
+                showCustomerFeedbacksDTO.setOrderID(null);
+            }
 
             showCustomerFeedbacksDTOs.add(showCustomerFeedbacksDTO);
         }
