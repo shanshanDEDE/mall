@@ -73,22 +73,33 @@ public class TrackServiceImpl implements TrackService {
 
         return trackShowDTOs;
     }
-    @Override
-    public boolean getCheckTrackDTO(Long userId,String specId) {
-        Track tracks = trackRepository.findTrackByspecIdAnduserId(specId,userId);
+//    @Override
+//    public boolean getCheckTrackDTO(Long userId,String specId) {
+//        Track tracks = trackRepository.findTrackByspecIdAnduserId(specId,userId);
+//
+//        if(tracks!=null){
+//            return true;
+//        }else{
+//            return false;
+//        }
+//    }
 
-        if(tracks!=null){
-            return true;
-        }else{
-            return false;
-        }
+
+    @Override
+    @Transactional
+    public boolean getCheckTrackDTO(Long userId, List<String> specId) {
+       for (String s : specId) {
+           Track tracks = trackRepository.findTrackByspecIdAnduserId(s,userId);
+           if(tracks!=null){
+               return true;
+           }
+       }
+        return false;
     }
 
-
-
-
+    @Override
     @Transactional
-    public Track addTrack(String specID, Long userId) {
+    public boolean addTrack(String specID, Long userId) {
         User user = usersRepository.findById(userId).orElse(null);
         if (user == null) {
             throw new IllegalArgumentException("User with ID " + userId + " not found");
@@ -107,7 +118,8 @@ public class TrackServiceImpl implements TrackService {
         Track newTrack = new Track();
         newTrack.setUser(user);
         newTrack.setProductSpec(productSpec);
-        return trackRepository.save(newTrack);
+        trackRepository.save(newTrack);
+        return true;
     }
 
     @Override
@@ -120,5 +132,6 @@ public class TrackServiceImpl implements TrackService {
 
         trackRepository.delete(existingTrack);
     }
+    //deDeleteTrack
 }
 
