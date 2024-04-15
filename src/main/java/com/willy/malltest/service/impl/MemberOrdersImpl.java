@@ -1,16 +1,13 @@
 package com.willy.malltest.service.impl;
 
-import com.willy.malltest.dto.CustomerFeedbackDTO;
 import com.willy.malltest.dto.MemberShowOrdersDTO;
 import com.willy.malltest.dto.OrderDetailDTO;
 import com.willy.malltest.model.Orders;
 import com.willy.malltest.model.OrdersDetail;
-import com.willy.malltest.model.User;
 import com.willy.malltest.repository.OrdersDetailRepository;
 import com.willy.malltest.repository.OrdersRepository;
 import com.willy.malltest.repository.UsersRepository;
 import com.willy.malltest.service.MemberOrders;
-import org.hibernate.query.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

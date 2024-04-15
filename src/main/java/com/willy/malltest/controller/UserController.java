@@ -10,12 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
+
+
 @RestController
-@RequestMapping("/user")
 @CrossOrigin(allowCredentials = "true", origins = { "http://localhost:5173/", "http://127.0.0.1:5173" })
 public class UserController {
 
@@ -26,7 +26,7 @@ public class UserController {
     private MailService mailService;
 
 
-    @RequestMapping("/login")
+    @PostMapping("/user/login")
     public UserDto login(
             @RequestParam("email") String email,
             @RequestParam("password") String password,
@@ -44,13 +44,13 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping("/logout")
+    @GetMapping("/user/logout")
     public boolean logout(HttpSession session) {
         session.invalidate();
         return true;
     }
 
-    @PostMapping("/register")
+    @PostMapping("/user/register")
     public User register(
             @RequestParam("name") String username,
             @RequestParam("email") String email,
@@ -78,28 +78,27 @@ public class UserController {
             return newUsers;
         }
     }
-    @RequestMapping("/check")
+    @GetMapping("/user/check")
     public boolean checkLogin(HttpSession session) {
         UserDto loggedInUser = (UserDto) session.getAttribute("loggedInUser");
 
         return !Objects.isNull(loggedInUser);
     }
 
-    @RequestMapping("/getSession")
+    @GetMapping("/user/getSession")
     public UserDto getSession(HttpSession session) {
-        UserDto loggedInUser = (UserDto) session.getAttribute("loggedInUser");
 
-        return loggedInUser;
+        return (UserDto) session.getAttribute("loggedInUser");
     }
 
-    @RequestMapping("/mail/pwd")
+    @PostMapping("/user/mail/pwd")
     public void sendPassword(@RequestParam("email") String email,
                              @RequestParam("phone") String phone) {
         mailService.sendPassword(email, phone);
 
     }
 
-    @RequestMapping("mail/verify")
+    @PostMapping("/user/mail/verify")
     public void sendVerifyCode(@RequestParam("email") String email,
                                @RequestParam("verificationCode") String verificationCode) {
 

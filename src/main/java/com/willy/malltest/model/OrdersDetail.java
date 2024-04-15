@@ -21,10 +21,12 @@ public class OrdersDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Orders orders;
 
     @ManyToOne
     @JoinColumn(name = "spec_id")
+    @JsonIgnore
     private ProductSpec productSpec;
 
     @Column(name = "quantity")

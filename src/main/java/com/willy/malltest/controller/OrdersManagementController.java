@@ -24,7 +24,7 @@ public class OrdersManagementController {
     private OrdersManagementService ordersManagementService;
 
     @Autowired
-    private OrdersDetailRepository ordersDetailRepo;
+    private OrdersDetailRepository ordersDetailRepository;
 
     @GetMapping("/orders/findAll")
     public List<Orders> findAllOrders() {
@@ -33,7 +33,6 @@ public class OrdersManagementController {
 
     @GetMapping("/orders/findAllOrdersDetailDTOs")
     public List<OrdersDetailDTO> findAllOrdersDetailDTOs() {
-
         return ordersManagementService.findOrdersDetailDTOs();
     }
 
@@ -41,10 +40,14 @@ public class OrdersManagementController {
     public String insertOrdersDetail(@RequestBody ReceiveOrdersDetailDTO receiveOrdersDetailDTO) {
         return ordersManagementService.insertOrdersDetail(receiveOrdersDetailDTO);
     }
-
     @PostMapping("/orders/insertOrders")
-    public ResponseEntity<Map<String, String>> insertOrders(@RequestBody ReceiveOrdersDTO receiveOrdersDTO) {
-        String orderId =  ordersManagementService.insertOrders(receiveOrdersDTO);
+    public String insertOrders(@RequestBody ReceiveOrdersDTO receiveOrdersDTO) {
+        return ordersManagementService.insertOrders(receiveOrdersDTO);
+    }
+
+    @PostMapping("/orders/insertOrdersCart")
+    public ResponseEntity<Map<String, String>> insertOrdersCart(@RequestBody ReceiveOrdersDTO receiveOrdersDTO) {
+        String orderId =  ordersManagementService.insertOrdersCart(receiveOrdersDTO);
         if (orderId != null) {
             Map<String, String> response = new HashMap<>();
             response.put("orderId", orderId);
@@ -54,32 +57,22 @@ public class OrdersManagementController {
         }
     }
 
-//    @PostMapping("/orders/insertOrdersAndDetail")
-//    public String insertOrdersAndDetail(@RequestBody ReceiveOrdersAndDetailDTO receiveOrdersAndDetailDTO) {
-//        return ordersManagementService.insertOrdersAndDetail(receiveOrdersAndDetailDTO);
-//    }
-
-
-//    @PostMapping("/orders/reorder")
-//    public Orders reorderByOrderId(@RequestParam Integer orderId) {
-//        return ordersManagementService.reorderByOrderId(orderId);
-//    }
-
     @PutMapping("/orders/updateOrder/{orderId}")
     public Orders updateOrderByOrderId(@PathVariable Integer orderId, @RequestBody ReceiveOrdersDTO receiveOrdersDTO) {
         return ordersManagementService.updateOrderByOrderId(orderId, receiveOrdersDTO);
     }
+    @PutMapping("/orders/updateOrdersDetail/{ordersDetailId}")
+    public String updateOrdersDetailByOrdersDetailId(@PathVariable Integer ordersDetailId, @RequestBody ReceiveOrdersDetailDTO receiveOrdersDetailDTO) {
+        return ordersManagementService.updateOrdersDetailByOrdersDetailId(ordersDetailId, receiveOrdersDetailDTO);
+    }
 
-
-//    @PutMapping("/orders/edit")
-//    public Integer editNameById(String recipientName, Integer orderId) {
-//        return ordersManagementService.updateNameById(recipientName, orderId);
-//    }
-
-    @PutMapping("/orders/changeOrderStatus")
-    public String changeOrderStatus(@RequestParam Integer OrderId) {
-        ordersManagementService.updateOrderStatusByOrderId(OrderId);
-        return "ok";
-
+    @DeleteMapping("/orders/deleteOrdersDetail/{ordersDetailId}")
+    public String deleteOrdersDetailByOrdersDetailId(@PathVariable Integer ordersDetailId) {
+        ordersManagementService.deleteOrdersDetailByOrdersDetailId(ordersDetailId);
+        return "success delete ordersDetail";
+    }
+    @PutMapping("/orders/updateOrderStatusByOrderId/{orderId}")
+    public Orders updateOrderStatusByOrderId(@PathVariable Integer orderId, @RequestParam String orderStatus) {
+        return ordersManagementService.updateOrderStatusByOrderId(orderId, orderStatus);
     }
 }

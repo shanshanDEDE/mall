@@ -1,5 +1,6 @@
 package com.willy.malltest.controller;
 
+import com.willy.malltest.dto.AddCartDto;
 import com.willy.malltest.dto.CartDto;
 import com.willy.malltest.dto.UserDto;
 import com.willy.malltest.model.CartItems;
@@ -19,17 +20,25 @@ public class CartController{
     CartService cartService;
 
     @PostMapping("/cart/add")
-    public CartItems addToCart(@RequestParam String specId, @RequestParam int quantity,HttpSession session) {
-//
-//        @RequestParam String specId,@RequestParam Long userId
+    public ResponseEntity<?> addToCart(@RequestBody AddCartDto addCartDto) {
+        System.out.println("Received specId: " + addCartDto.getSpecId());
+        System.out.println("Received quantity: " + addCartDto.getQuantity());
+//        UserDto loggedInUser = (UserDto) session.getAttribute("LoggedInUser");
+//        if (loggedInUser == null) {
+//            throw new RuntimeException("Please log in.");
+//        }
+      CartItems addToCart = cartService.addToCart(addCartDto.getUserId(), addCartDto.getSpecId(), addCartDto.getQuantity());
+        return ResponseEntity.ok(addToCart);
+    }
+    @GetMapping("/check-session")
+    public ResponseEntity<?> checkSession(HttpSession session) {
         UserDto loggedInUser = (UserDto) session.getAttribute("LoggedInUser");
         if (loggedInUser == null) {
-            throw new RuntimeException("Please log in.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in.");
+        } else {
+            return ResponseEntity.ok("Session active for user: " + loggedInUser.getUserName());
         }
-      CartItems addToCart = cartService.addToCart(loggedInUser.getUserId(),specId, quantity);
-        return addToCart;
     }
-
     @GetMapping("/cart")
     public List<CartDto> getCartByUserId(HttpSession session) {
 //        @PathVariable Long userId

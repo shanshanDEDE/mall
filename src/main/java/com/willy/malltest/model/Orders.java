@@ -23,6 +23,7 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;  //foreign key,
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -32,6 +33,7 @@ public class Orders {
 
     @Column(name = "payment_method")
     private String paymentMethod;
+
     @Column(name = "order_status")
     private String orderStatus;
 
@@ -47,8 +49,10 @@ public class Orders {
 
     @Column(name = "deliver_address")
     private String deliverAddress;
+
     @Column(name = "recipient_name")
     private String recipientName;
+
     @Column(name = "recipient_phone")
     private String recipientPhone;
 
@@ -59,7 +63,7 @@ public class Orders {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "orders", cascade = CascadeType.ALL )
     @JsonIgnore
-    private List<OrdersDetail> ordersDetails;
+    private List<OrdersDetail> ordersDetails = new ArrayList<>();
 
     //test
     @OneToMany(mappedBy = "orders")

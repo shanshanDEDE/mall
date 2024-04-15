@@ -13,6 +13,7 @@ public class OrdersDetailDTO {
     private String userName;
     private Integer ordersDetailId;
     private String productName;
+    private String specId; // 4/10新增
     private String color;
     private int quantity;
     private int price;

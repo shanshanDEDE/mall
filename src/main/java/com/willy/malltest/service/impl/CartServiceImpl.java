@@ -36,7 +36,7 @@ public class CartServiceImpl implements CartService {
         }
         if (cartItems == null){
             cartItems = new CartItems();
-            cartItems.setQuantity(1);
+            cartItems.setQuantity(quantity);
             cartItems.setUser(user);
             cartItems.setProductSpec(spec);
         }

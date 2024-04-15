@@ -48,13 +48,13 @@ public class MailServiceImpl implements MailService{
         }
 
         String newPwd = stringBuilder.toString();
-        String content = "你的臨時密碼為： "+newPwd+" ，請盡速登入更改密碼。";
-        String subject = "A New Password For You";
+        String content = "親愛的用戶您好，您的臨時密碼為： "+newPwd+" ，請盡速登入系統並更改密碼以確保帳戶安全。";
+        String subject = "Apple Tree 忘記密碼 - 新密碼通知";
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject(subject);
         message.setText(content);
-        message.setFrom("3C Mall<project.3c.mall@gmail.com>");
+        message.setFrom("Apple Tree<project.3c.mall@gmail.com>");
 
 
         mailSender.send(message);
@@ -67,13 +67,14 @@ public class MailServiceImpl implements MailService{
 
     @Override
     public void sendVerifyCode(String email, String verificationCode) {
-        String content = "歡迎加入3C Mall會員，您的驗證碼為："+verificationCode+"，請於5分鐘內輸入以完成註冊，5分鐘後此驗證碼將會失效！";
-        String subject = "3C Mall註冊驗證碼";
+        System.out.println("VerificationCode:"+verificationCode);
+        String content = "歡迎加入Apple Tree 會員，您的驗證碼為："+verificationCode+"，請於10分鐘內輸入以完成註冊，10分鐘後此驗證碼將會失效！";
+        String subject = "Apple Tree 註冊驗證碼";
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject(subject);
         message.setText(content);
-        message.setFrom("3C Mall<project.3c.mall@gmail.com>");
+        message.setFrom("Apple Tree<project.3c.mall@gmail.com>");
 
         mailSender.send(message);
     }

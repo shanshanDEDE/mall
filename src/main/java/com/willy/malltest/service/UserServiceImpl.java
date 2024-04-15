@@ -64,11 +64,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean checkIfUsernameExist(String email) {
         User dbUser = userRepository.findByEmail(email);
-        if(dbUser != null) {
-            return true; //已存在
-        }else {
-            return false;
-        }
+        return dbUser != null; //已存在
     }
     // check login
     @Override
@@ -93,6 +89,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDto loginOAuth2(String email){
         User dbUser = userRepository.findByEmail(email);
+        updateLastloginTime(dbUser.getUserId());
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(dbUser,userDto);
         return userDto;

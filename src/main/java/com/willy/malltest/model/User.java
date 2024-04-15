@@ -54,6 +54,10 @@ public class User {
     private String deliverAddress;
     @Column(name = "phone")
     private String phone;
+    @Column(name = "age")
+    private Integer age;
+    @Column(name = "sex")
+    private Integer sex;
     @Column(name = "authentication")
     private Integer authentication;
 
