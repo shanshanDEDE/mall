@@ -55,6 +55,7 @@ public class TrackServiceImpl implements TrackService {
             dto.setTrackID(track.getTrackID());
             dto.setUserID(track.getUser().getUserId());
             dto.setSpecID(track.getProductSpec().getSpecId());
+            dto.setProductId(track.getProductSpec().getProduct().getProductId()); // 設置 productId
 
             // 获取与 ProductSpec 关联的 ProductPhoto 对象列表
             List<ProductPhoto> productPhotos = track.getProductSpec().getProductPhotos();
@@ -68,6 +69,11 @@ public class TrackServiceImpl implements TrackService {
             }
             dto.setProductName(track.getProductSpec().getProduct().getProductName());
             dto.setProductPrice(track.getProductSpec().getProduct().getPrice());
+            dto.setProductDescription(track.getProductSpec().getProduct().getProductDescription());
+            List<String> specIds = new ArrayList<>();
+            specIds.add(track.getProductSpec().getSpecId());
+            dto.setSpecIds(specIds);
+
             trackShowDTOs.add(dto); // 将转换后的 TrackShowDTO 加入到列表中
         }
 
@@ -133,5 +139,11 @@ public class TrackServiceImpl implements TrackService {
         trackRepository.delete(existingTrack);
     }
     //deDeleteTrack
+
+
+    public String getProductIdBySpecId(String specId) {
+        return productSpecRepository.findProductIdBySpecId(specId)
+                .orElseThrow(() -> new IllegalArgumentException("No product found for specId: " + specId));
+    }
 }
 
