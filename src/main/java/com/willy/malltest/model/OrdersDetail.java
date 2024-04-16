@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -23,6 +25,7 @@ public class OrdersDetail {
 
     @ManyToOne
     @JoinColumn(name = "spec_id")
+    @JsonIgnore
     private ProductSpec productSpec;
 
     @Column(name = "quantity")
@@ -34,5 +37,9 @@ public class OrdersDetail {
     @OneToOne(mappedBy = "ordersDetail")
     private ReturnDetails returnDetails;
 
+    //test
+    @OneToMany(mappedBy = "ordersDetails")
+    @JsonIgnore
+    private List<CustomerFeedback> customerFeedback;
 
 }

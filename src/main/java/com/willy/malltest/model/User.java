@@ -46,6 +46,11 @@ public class User {
     @Column(name = "authentication")
     private Integer authentication;
 
+    @Column(name = "age")
+    private Integer age;
+
+    @Column(name = "sex")
+    private Integer sex;
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Orders> orders = new HashSet<>();
