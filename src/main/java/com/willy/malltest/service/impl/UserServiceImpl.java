@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto addUsersOAuth2(String id, String name, String email) {
+    public UserDto addUsersOAuth2(String id, String name, String email, String providerName) {
         User user = new User();
         user.setUserName(name);
         user.setEmail(email);
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
         ThirdParty thirdParty = new ThirdParty();
         thirdParty.setProviderId(id);
-        thirdParty.setProviderName(name);
+        thirdParty.setProviderName(providerName);
         thirdParty.setUser(user);
 
         userRepository.save(user);

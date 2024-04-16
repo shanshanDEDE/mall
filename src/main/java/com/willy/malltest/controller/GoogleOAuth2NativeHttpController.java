@@ -115,7 +115,7 @@ public class GoogleOAuth2NativeHttpController {
             if(isRigister){
                 loggedInUser = userService.loginOAuth2(payloadEmail);
             }else{
-                loggedInUser = userService.addUsersOAuth2(payloadGoogleId,payloadName,payloadEmail);
+                loggedInUser = userService.addUsersOAuth2(payloadGoogleId,payloadName,payloadEmail,"Google");
             }
 
             // 將 USER 放到 SESSION 內
