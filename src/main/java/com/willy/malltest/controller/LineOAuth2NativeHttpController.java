@@ -158,7 +158,7 @@ public class LineOAuth2NativeHttpController {
                 if(isRigister){
                     loggedInUser = userService.loginOAuth2(payloadEmail);
                 }else{
-                    loggedInUser = userService.addUsersOAuth2(payloadLineId,payloadName,payloadEmail);
+                    loggedInUser = userService.addUsersOAuth2(payloadLineId,payloadName,payloadEmail,"Line");
                 }
 
                 // 將 USER 放到 SESSION 內
