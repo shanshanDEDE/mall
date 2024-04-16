@@ -2,26 +2,30 @@ package com.willy.malltest.controller;
 
 
 import com.willy.malltest.dto.ProductDto;
-import com.willy.malltest.model.Category;
-import com.willy.malltest.model.Product;
-import com.willy.malltest.model.ProductPhoto;
-import com.willy.malltest.model.ProductSpec;
+import com.willy.malltest.model.*;
 import com.willy.malltest.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.thymeleaf.util.StringUtils.substring;
+
 @RestController
-@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:5173/", "http://127.0.0.1:5173"})
+@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:5173","http://localhost:3000", "http://127.0.0.1:5173"})
 public class ProductController {
 
     @Autowired
     private ProductService productService;
+    private Product product;
 
 
     @GetMapping("/products/getAllProducts")
@@ -29,19 +33,31 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+//    @GetMapping("/products/getProductByCategoryId")
+//
+//    public List<Product> getProductByCategoryId(@RequestParam String categoryId) {
+//        return productService.getProductByCategoryId(categoryId);
+//    }
 
+    @GetMapping("/products/getProductByCategoryId")
+    public List<Product> getProductByCategoryId(@RequestParam String categoryId) {
+        List<Product> products = productService.getProductByCategoryId(categoryId);
+        List<Product> filteredProducts = new ArrayList<>();
+
+        for (Product product : products) {
+//            && product.getSalesStatus() == 1
+            if (product.getSalesStatus() != null ) {
+                filteredProducts.add(product);
+            }
+        }
+
+        return filteredProducts;
+    }
 
     @GetMapping("/products/getProductById")
     public Product getProductById(String productId) {
         return productService.findProductById(productId);
     }
-
-//    @PostMapping("/products/insertProduct")
-//    public Product insertProduct(@RequestBody Product product) {
-//        return productService.insertProduct(product);
-//    }
-
-
 
     @PostMapping("/products/insertPhone")
     public Product insertPhone(@RequestBody Product p) {
@@ -50,6 +66,7 @@ public class ProductController {
         System.out.println(new Date());
         p.setSetupDate(new Date());
         p.setModifyDate(new Date());
+        p.setSalesStatus(1);
         return productService.insertProduct(p);
     }
 
@@ -60,6 +77,7 @@ public class ProductController {
         System.out.println(new Date());
         p.setSetupDate(new Date());
         p.setModifyDate(new Date());
+        p.setSalesStatus(1);
         return productService.insertProduct(p);
     }
 
@@ -70,10 +88,11 @@ public class ProductController {
         System.out.println(new Date());
         p.setSetupDate(new Date());
         p.setModifyDate(new Date());
+        p.setSalesStatus(1);
         return productService.insertProduct(p);
     }
 
-    @PutMapping("/products/updateProduct/{productID}")
+    @PutMapping("/products/updateProduct/{productId}")
     public Product updateProduct(@PathVariable String productId, @RequestBody Product updatedProduct) {
         System.out.println(productId);
         // 不需要转换为字符串
@@ -146,11 +165,10 @@ public class ProductController {
 
         return productService.findProductPhotoById(id)	;
     }
-    @GetMapping("/products/getProductByCategoryId")
-
-    public List<Product> getProductByCategoryId(@RequestParam String categoryId) {
-        return productService.getProductByCategoryId(categoryId);
-    }
+//    @GetMapping("/products/getProductByCategoryId")
+//    public List<Product> getProductByCategoryId(@RequestParam String categoryId) {
+//        return productService.getProductByCategoryId(categoryId);
+//    }
 
     @GetMapping("/products/findProductsByCategoryId")   //搜尋不同category的商品用DTO
     public Page<ProductDto> findProductsByCategoryId(@RequestParam String categoryId, @RequestParam Integer pageNumber) {
@@ -173,6 +191,68 @@ public class ProductController {
             e.printStackTrace(); // 您可能希望適當地記錄例外情況或根據應用程式的需要進行處理
             return "error"; // 假設 "error" 是表示發生錯誤的邏輯視圖名稱
         }
+
+        return "success";
+    }
+
+
+    // 獲取所有產品圖片的 Controller 端
+    @GetMapping("/photos/image/{photoId}")
+    public ResponseEntity<byte[]> downloadImage(@PathVariable Integer photoId) {
+
+        ProductPhoto photos = productService.findProductPhotoByPhotoId(photoId);
+
+        byte[] photoByte = photos.getPhotoFile();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG);
+
+        return new ResponseEntity<byte[]>(photoByte, headers, HttpStatus.OK);
+    }
+
+    @PutMapping("/products/productSalesStatus")
+    public Product productSalesStatus(@RequestParam String productId) {
+        Product product = productService.findProductById(productId);
+        if (product.getSalesStatus() == 1) {
+            product.setSalesStatus(0);
+            product.setModifyDate(new Date());
+        } else {
+            product.setSalesStatus(1);
+            product.setModifyDate(new Date());
+        }
+
+        productService.saveProduct(product);
+        return product;
+    }
+
+    @GetMapping("/showAll")
+    public ResponseEntity<MultiValueMap<String, Object>> showAllPhotos() {
+        List<ProductPhoto> photos = productService.findAllProductPhotos();
+        if (photos.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        for (ProductPhoto photo : photos) {
+            byte[] photoByte = photo.getPhotoFile();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            body.add("photo", new HttpEntity<>(photoByte, headers));
+        }
+        return ResponseEntity.ok().body(body);
+    }
+
+    @PostMapping("/products/insertProductSpec")
+    public String insertProductSpec(@RequestBody ProductSpec productSpec) {
+        productService.insertProductSpec(productSpec);
+       String specId=productSpec.getSpecId();
+        return "success insert productSpec";
+    }
+    @PutMapping("/products/updateProductSpec")
+    public String updateProductSpec(@RequestParam String specId, @RequestParam Integer stockQuantity) {
+        ProductSpec productSpec = productService.findProductSpecBySpecId(specId);
+        productSpec.setStockQuantity(stockQuantity);
+        productService.updateProductSpec(productSpec);
         return "success";
     }
 
@@ -187,7 +267,26 @@ public class ProductController {
     public Page<ProductDto> findFilterCategoryAndProductByPage(@PathVariable Integer pageNumber, @RequestParam String productName, @RequestParam String categoryId) {
         return productService.findFilterCategoryAndProductByPage(pageNumber, productName, categoryId);
     }
+    @GetMapping("/products/findProductSpecBySpecId/{specId}")
+    public ProductSpec findColorBySpecId(@PathVariable String specId) {
+        return productService.findProductSpecBySpecId(specId);
+    }
+    @DeleteMapping("/products/deleteProduct")
+    public String deleteProduct(@RequestParam String productId) {
+        productService.deleteProduct(productId);
+        return "success delete product";
+    }
+    @DeleteMapping("/products/deleteProductSpec")
+    public String deleteProductSpec(@RequestParam String specId) {
+        productService.deleteProductSpec(specId);
+        return "success delete productSpec";
+    }
 
+    @PutMapping("/products/changeStockQuantity")
+    public String changeStockQuantity(@RequestParam String specId, @RequestParam Integer stockQuantity) {
+        productService.changeStockQuantity(specId, stockQuantity);
 
+        return "success change stockQuantity";
+    }
 
 }

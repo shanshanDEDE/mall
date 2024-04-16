@@ -7,16 +7,16 @@ import com.willy.malltest.service.MailService;
 import com.willy.malltest.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 
 
 @RestController
-@CrossOrigin(allowCredentials = "true", origins = { "http://localhost:5173/", "http://127.0.0.1:5173" })
+@CrossOrigin(allowCredentials = "true", origins = { "http://localhost:5173","http://localhost:3000" })
 public class UserController {
 
     @Autowired
@@ -104,5 +104,59 @@ public class UserController {
 
         mailService.sendVerifyCode(email, verificationCode);
     }
+    @PostMapping("/user/registerAdmin")
+    public User registerAdmin(@RequestParam("name") String username, @RequestParam("email") String email, @RequestParam("phone") String phone, @RequestParam("password") String password) {
 
+        boolean isExist = userService.checkIfUsernameExist(email);
+
+        if (isExist) {
+            throw new RuntimeException("此管理員已存在");
+
+        } else {
+            User newUsers = new User();
+            newUsers.setUserName(username);
+            newUsers.setEmail(email);
+            newUsers.setPhone(phone);
+            newUsers.setPassword(password);
+            newUsers.setAuthentication(0);
+
+            Date today = new Date();
+            newUsers.setRegisterDate(today);
+            newUsers.setLastLoginTime(today);
+
+            userService.addUsers(newUsers);
+            return newUsers;
+        }
+    }
+
+    @GetMapping("/user/getAllUsers")
+    public List<User> getAllUsers() {
+
+        return userService.getAllUsers();
+    }
+
+    @PutMapping("/user/banUser")
+    public String banUser(@RequestParam("id") Long id) {
+
+        User user= userService.banUser(id);
+        return "UserName:"+user.getUserName()+ " success ban!";
+    }
+
+    @PutMapping("/user/unbanUser")
+    public String unbanUser(@RequestParam("id") Long id) {
+        User user=userService.unbanUser(id);
+        return "UserName:"+user.getUserName()+ " success restore!";
+    }
+
+    @DeleteMapping("/user/deleteUser")
+    public String deleteUser(@RequestParam("id") Long id) {
+
+        return userService.deleteUser(id);
+    }
+
+    @GetMapping("/user/findNameById")
+    public String findNameById(@RequestParam("id") Long id) {
+
+        return userService.findNameById(id);
+    }
 }

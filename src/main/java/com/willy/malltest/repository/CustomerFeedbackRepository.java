@@ -22,4 +22,11 @@ public interface CustomerFeedbackRepository extends JpaRepository<CustomerFeedba
     @Modifying
     @Query(value = "UPDATE customer_feedback SET type = :type, description = :description, customer_feedback_status = :customerFeedbackStatus WHERE feedback_id = :feedbackID", nativeQuery = true)
     void updateCustomerFeedback(@Param("type") String type, @Param("description") String description, @Param("customerFeedbackStatus") String customerFeedbackStatus, @Param("feedbackID") Integer feedbackID);
+
+//    User findByfeedbackId(Integer feedbackID);
+
+    CustomerFeedback findByFeedbackID(Integer feedbackID);
+
+    @Query(value = "SELECT * FROM customer_feedback", nativeQuery = true)
+    List<CustomerFeedback> findAllFeedbacks();
 }

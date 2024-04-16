@@ -59,6 +59,7 @@ public class Product {
     @Column(name = "modify_date")
     private Date modifyDate;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY) //延遲加載
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
@@ -66,4 +67,7 @@ public class Product {
     @JsonIgnore
     @OneToMany( mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSpec> productSpecs = new ArrayList<>();
+
+    @Column(name = "sales_status")
+    private Integer salesStatus;
 }

@@ -2,6 +2,7 @@ package com.willy.malltest.service;
 
 import com.willy.malltest.dto.CustomerFeedbackDTO;
 import com.willy.malltest.dto.ShowCustomerFeedbackDTO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

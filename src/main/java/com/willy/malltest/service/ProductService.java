@@ -1,6 +1,7 @@
 package com.willy.malltest.service;
 
 import com.willy.malltest.dto.ProductDto;
+import com.willy.malltest.model.Category;
 import com.willy.malltest.model.Product;
 import com.willy.malltest.model.ProductPhoto;
 import com.willy.malltest.model.ProductSpec;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -44,7 +46,8 @@ public class ProductService {
 
     //
     public List<Product> getProductByCategoryId(String categoryId) {
-        return productRepository.findByCategoryCategoryId(categoryId);
+        Category category = categoryRepository.findByCategoryId(categoryId);
+        return productRepository.findProductsByCategory(category);
     }
 
     public Product findProductById(String productId) {
@@ -178,6 +181,24 @@ public class ProductService {
         return productPhotoRepository.save(productPhoto);
     }
 
+    public List<ProductPhoto> findAllProductPhotos() {
+        return productPhotoRepository.findAll();
+    }
+
+    public ProductSpec insertProductSpec(ProductSpec productSpec) {
+        String specId=productSpec.getSpecId();
+        Product product=productRepository.findProductsByProductId(specId.substring(0,5));
+        productSpec.setDeleted(false);
+        productSpec.setProduct(product);
+        return productSpecRepository.save(productSpec);
+    }
+
+    public ProductPhoto findProductPhotoByPhotoId(Integer photoId) {
+        Optional<ProductPhoto> optional = productPhotoRepository.findById(photoId);
+
+        return optional.orElse(null);
+    }
+
     public ProductSpec findProductSpecBySpecId(String specId) {
         return productSpecRepository.findProductSpecBySpecId(specId);
     }
@@ -185,17 +206,14 @@ public class ProductService {
     public Page<ProductDto> findFilterCategoryAndProductByPage(Integer pageNumber, String productName, String categoryId) {
         Pageable page = PageRequest.of(pageNumber, 6);
         Page<Product> products = productRepository.findByCategoryAndProductName(categoryId, productName, page);
-
         return products.map(p -> {
             ProductDto pt = new ProductDto();
             BeanUtils.copyProperties(p, pt);
-
             List<ProductSpec> productSpecs = p.getProductSpecs();    //加入productSpec
             if (productSpecs != null && !productSpecs.isEmpty()) {
                 List<String> specIds = new ArrayList<>();
                 productSpecs.forEach(spec-> specIds.add(spec.getSpecId()));
                 pt.setSpecIds(specIds);
-
                 List<ProductPhoto> productPhotos = productSpecs.get(0).getProductPhotos();
                 if (productPhotos != null && !productPhotos.isEmpty()) {
                     ProductPhoto firstPhoto = productPhotos.get(0);
@@ -205,7 +223,27 @@ public class ProductService {
             return pt;
         });
     }
+    public ProductSpec updateProductSpec(ProductSpec productSpec) {
+        return productSpecRepository.save(productSpec);
+    }
 
+    public void deleteProduct(String productId) {
+        Product product = productRepository.findProductsByProductId(productId);
+        productRepository.delete(product);
+    }
+
+    public void deleteProductSpec(String specId) {
+        ProductSpec productSpec = productSpecRepository.findProductSpecBySpecId(specId);
+        productSpecRepository.delete(productSpec);
+    }
+    public void changeStockQuantity(String specId, int quantity) {
+        Product product = productRepository.findProductsByProductId(specId.substring(0,5));
+        ProductSpec productSpec = productSpecRepository.findProductSpecBySpecId(specId);
+        productSpec.setProduct(product);
+        productSpec.setStockQuantity(quantity);
+        productSpecRepository.save(productSpec);
+
+    }
 
 
 }

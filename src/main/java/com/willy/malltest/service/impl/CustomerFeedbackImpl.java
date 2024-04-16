@@ -8,6 +8,7 @@ import com.willy.malltest.repository.OrdersDetailRepository;
 import com.willy.malltest.repository.OrdersRepository;
 import com.willy.malltest.repository.UsersRepository;
 import com.willy.malltest.service.CustomerFeedback;
+import com.willy.malltest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +38,7 @@ public class CustomerFeedbackImpl implements CustomerFeedback {
         for (com.willy.malltest.model.CustomerFeedback customerFeedback : customerFeedbacks) { // 使用 for-each 迴圈遍歷 List 中的每個 Track 對象
             CustomerFeedbackDTO dto = new CustomerFeedbackDTO();
             dto.setFeedbackID(customerFeedback.getFeedbackID());
+            dto.setUserName(usersRepository.findByUserId(customerFeedback.getUser().getUserId()).getUserName());
             dto.setUserID(customerFeedback.getUser().getUserId());
             dto.setOrderID(customerFeedback.getOrders().getOrderId());
             dto.setType(customerFeedback.getType());
@@ -78,6 +80,7 @@ public class CustomerFeedbackImpl implements CustomerFeedback {
 
             showCustomerFeedbacksDTO.setFeedbackID(customerFeedback.getFeedbackID());
             showCustomerFeedbacksDTO.setUserID(customerFeedback.getUser().getUserId());
+            showCustomerFeedbacksDTO.setOrderID(customerFeedback.getOrders().getOrderId());
             showCustomerFeedbacksDTO.setType(customerFeedback.getType());
             showCustomerFeedbacksDTO.setFeedbackDate(customerFeedback.getFeedbackDate());
             showCustomerFeedbacksDTO.setDescription(customerFeedback.getDescription());

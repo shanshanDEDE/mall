@@ -1,5 +1,6 @@
 package com.willy.malltest.repository;
 
+import com.willy.malltest.model.Category;
 import com.willy.malltest.model.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +15,10 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     @Query("SELECT p FROM Product p INNER JOIN p.category c WHERE c.categoryId = :Id")
     List<Product> findByCategoryCategoryId(String Id);
 
+    List<Product> findProductsByCategory(Category category);
 
+
+    @Query("SELECT p FROM Product p WHERE p.productId = :productId")
     Product findProductsByProductId(String productId);
     Page<Product> findByCategoryCategoryId(String categoryId, Pageable pageable);
 

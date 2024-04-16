@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(allowCredentials = "true", origins = { "http://localhost:5173","http://localhost:3000" })
+
 public class MemberController {
 
 @Autowired

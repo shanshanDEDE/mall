@@ -36,6 +36,9 @@ public class ProductSpec {
     @Column(name = "stock_quantity")
     private int stockQuantity;
 
+    @Column(name = "deleted")
+    private boolean deleted;
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "productSpec")
@@ -54,7 +57,7 @@ public class ProductSpec {
     private List<OrdersDetail> ordersDetails = new ArrayList<>();
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product product;
 
