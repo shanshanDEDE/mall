@@ -148,4 +148,10 @@ public class UserController {
 
         return userService.deleteUser(id);
     }
+
+    @GetMapping("/findNameById")
+    public String findNameById(@RequestParam("id") Long id) {
+
+        return userService.findNameById(id);
+    }
 }

@@ -12,14 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class CustomerFeedBackController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private EmailService emailService;
+
 
     @Autowired
     private CustomerFeedback customerFeedback;
@@ -43,14 +43,8 @@ public class CustomerFeedBackController {
     }
 
     @PostMapping("/create/customerFeedbacks")
-    public String createCustomerFeedbacks(@RequestBody CustomerFeedbackDTO customerFeedbackDTO) {
-        com.willy.malltest.model.CustomerFeedback customerFeedback1 = customerFeedback.addFeedbacksDTO(customerFeedbackDTO);
-        Integer feedbackId = customerFeedback1.getFeedbackID();
-        Long userId = customerFeedbackDTO.getUserID();
-        String email = userService.findEmailById(userId);
-        mailService.sendFeedbackEmailCreate(feedbackId, email);
-
-        return "success create CustomerFeedbacks! FeedbackId: " + feedbackId;
+    public com.willy.malltest.model.CustomerFeedback createCustomerFeedbacks(@RequestBody CustomerFeedbackDTO customerFeedbackDTO){
+        return customerFeedback.addFeedbacksDTO(customerFeedbackDTO);
 
     }
 
@@ -59,13 +53,17 @@ public class CustomerFeedBackController {
         return customerFeedback.updateFeedbacksDTO(customerFeedbackDTO);
     }
 
+    @PutMapping("/update/customerFeedbacksStatus")
+    public com.willy.malltest.model.CustomerFeedback test(@RequestBody CustomerFeedbackDTO customerFeedbackDTO){
+        return customerFeedback.test(customerFeedbackDTO);
+    }
     @DeleteMapping("/delete/customerFeedbacks")
     public void deleteCustomerFeedbacks(@RequestBody CustomerFeedbackDTO customerFeedbackDTO) {
         customerFeedback.deleteCustomerFeedback(customerFeedbackDTO);
     }
 
-    @PostMapping("/sendFeedbackEmail")
-    public String sendFeedbackEmail(@RequestParam Integer feedbackId,@RequestBody String message) {
+    @PutMapping("/sendFeedbackEmail")
+    public String sendFeedbackEmail(@RequestParam Integer feedbackId,@RequestParam String message) {
         try {
             mailService.sendFeedbackEmailReturn(feedbackId, message);
         } catch (MessagingException e) {
@@ -74,14 +72,16 @@ public class CustomerFeedBackController {
         return "success send email! FeedbackId: " + feedbackId;
     }
 
-    @PutMapping("sendFeedbackEmailAndUpdate")
-    public String sendFeedbackEmailAndUpdate(@RequestParam Integer feedbackId,@RequestBody String message) {
-        try {
-            mailService.sendFeedbackEmailReturn(feedbackId, message);
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        }
-        return "success send email! FeedbackId: " + feedbackId;
-    }
 
+
+    @GetMapping("/unreadFeedbacks")
+    public List<CustomerFeedbackDTO> unreadFeedbacks() {
+        List<CustomerFeedbackDTO> customerFeedbacks = customerFeedback.getAllFeedbacksDTO();
+
+        // 使用Stream API篩選符合條件的CustomerFeedbackDTO物件
+
+        return customerFeedbacks.stream()
+                .filter(feedback -> "等待回覆中".equals(feedback.getCustomerFeedbackStatus()))
+                .collect(Collectors.toList());
+    }
 }

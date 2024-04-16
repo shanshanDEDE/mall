@@ -33,4 +33,6 @@ public interface UserService {
     List<User> getAllUsers();
 
     String findEmailById(Long id);
+
+    String findNameById(Long id);
 }
