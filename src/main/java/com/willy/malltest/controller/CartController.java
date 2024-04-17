@@ -24,11 +24,8 @@ public class CartController{
     public ResponseEntity<?> addToCart(@RequestBody AddCartDto addCartDto) {
         System.out.println("Received specId: " + addCartDto.getSpecId());
         System.out.println("Received quantity: " + addCartDto.getQuantity());
-//        UserDto loggedInUser = (UserDto) session.getAttribute("LoggedInUser");
-//        if (loggedInUser == null) {
-//            throw new RuntimeException("Please log in.");
-//        }
-      CartItems addToCart = cartService.addToCart(addCartDto.getUserId(), addCartDto.getSpecId(), addCartDto.getQuantity());
+//        System.out.println("Received color: " + addCartDto.getColor());
+        CartItems addToCart = cartService.addToCart(addCartDto.getUserId(), addCartDto.getSpecId(), addCartDto.getQuantity());
         return ResponseEntity.ok(addToCart);
     }
     @GetMapping("/check-session")
