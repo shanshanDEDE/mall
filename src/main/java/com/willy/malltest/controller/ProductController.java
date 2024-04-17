@@ -191,7 +191,7 @@ public class ProductController {
             e.printStackTrace(); // 您可能希望適當地記錄例外情況或根據應用程式的需要進行處理
             return "error"; // 假設 "error" 是表示發生錯誤的邏輯視圖名稱
         }
-
+        System.out.println( "圖片上傳成功" );
         return "success";
     }
 
@@ -246,6 +246,7 @@ public class ProductController {
     public String insertProductSpec(@RequestBody ProductSpec productSpec) {
         productService.insertProductSpec(productSpec);
        String specId=productSpec.getSpecId();
+        System.out.println("成功上傳");
         return "success insert productSpec";
     }
     @PutMapping("/products/updateProductSpec")
@@ -287,6 +288,13 @@ public class ProductController {
         productService.changeStockQuantity(specId, stockQuantity);
 
         return "success change stockQuantity";
+    }
+
+    @PutMapping("/products/changeSpecPhoto")
+    public String changeSpecPhoto(@RequestParam String specId, @RequestParam MultipartFile file) throws IOException {
+        productService.updateSpecPhoto(specId, file);
+        return "success change specPhoto";
+
     }
 
 }
