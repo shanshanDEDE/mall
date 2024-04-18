@@ -5,6 +5,7 @@ import com.willy.malltest.model.ThirdParty;
 import com.willy.malltest.model.User;
 import com.willy.malltest.repository.ThirdPartyRepository;
 import com.willy.malltest.repository.UsersRepository;
+import com.willy.malltest.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     private UsersRepository userRepository;
 
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public UserDto addUsersOAuth2(String id, String name, String email) {
+    public UserDto addUsersOAuth2(String id, String name, String email, String providerName) {
         User user = new User();
         user.setUserName(name);
         user.setEmail(email);
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService{
 
         ThirdParty thirdParty = new ThirdParty();
         thirdParty.setProviderId(id);
-        thirdParty.setProviderName(name);
+        thirdParty.setProviderName(providerName);
         thirdParty.setUser(user);
 
         userRepository.save(user);

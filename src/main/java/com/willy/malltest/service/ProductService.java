@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -78,7 +79,8 @@ public class ProductService {
     // 根據頁碼搜尋商品和二次封裝
     public Page<ProductDto> findProductByPage(Integer pageNumber) {
         Pageable page = PageRequest.of(pageNumber, 6);
-        Page<Product> products = productRepository.findAll(page);
+
+        Page<Product> products = productRepository.findSalesStatusOnSale(page);
 
         Page<ProductDto> productDtos = products.map(p -> {
             ProductDto pt = new ProductDto();
@@ -246,5 +248,12 @@ public class ProductService {
     }
 
 
+    public String updateSpecPhoto(String specId, MultipartFile file) throws IOException {
+        ProductSpec productSpec = productSpecRepository.findProductSpecBySpecId(specId);
+        List<ProductPhoto> productPhotos = productPhotoRepository.findByProductSpec(productSpec);
+        productPhotos.get(0).setPhotoFile(file.getBytes());
+        productPhotoRepository.save(productPhotos.get(0));
+        return "success update photo";
+    }
 }
 

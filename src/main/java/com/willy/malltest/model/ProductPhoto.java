@@ -20,7 +20,7 @@ public class ProductPhoto {
     @Column(name = "photo_file")
     private byte[] photoFile;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "spec_id", referencedColumnName = "spec_id")
     @JsonIgnore
     private ProductSpec productSpec;
