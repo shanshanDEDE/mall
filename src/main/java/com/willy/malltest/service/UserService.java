@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserService {
     User addUsers(User users);
 
-    UserDto addUsersOAuth2(String id, String name, String email);
+    UserDto addUsersOAuth2(String id, String name, String email, String providerName);
     boolean checkIfUsernameExist(String email);
     UserDto login(String email, String password);
 
