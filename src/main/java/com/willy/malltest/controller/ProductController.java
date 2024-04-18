@@ -171,4 +171,11 @@ public class ProductController {
 
     }
 
+    @PutMapping("/products/changeSpecPhoto")
+    public String changeSpecPhoto(@RequestParam String specId, @RequestParam MultipartFile file) throws IOException {
+        productService.updateSpecPhoto(specId, file);
+        return "success change specPhoto";
+
+    }
+
 }

@@ -32,6 +32,4 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
     @Query("SELECT p FROM Product p WHERE p.salesStatus = 1")
     Page<Product> findSalesStatusOnSale(Pageable pageable);
-
-    Product findByProductId(String productId);
 }
