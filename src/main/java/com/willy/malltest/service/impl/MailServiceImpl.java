@@ -1,9 +1,10 @@
-package com.willy.malltest.service;
+package com.willy.malltest.service.impl;
 
 import com.willy.malltest.model.CustomerFeedback;
 import com.willy.malltest.model.User;
 import com.willy.malltest.repository.CustomerFeedbackRepository;
 import com.willy.malltest.repository.UsersRepository;
+import com.willy.malltest.service.MailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import java.util.Random;
 
 
 @Service
-public class MailServiceImpl implements MailService{
+public class MailServiceImpl implements MailService {
 
     @Autowired
     private JavaMailSender mailSender;

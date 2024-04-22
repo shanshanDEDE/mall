@@ -4,7 +4,6 @@ import com.willy.malltest.dto.AddCartDto;
 import com.willy.malltest.dto.CartDto;
 import com.willy.malltest.dto.UserDto;
 import com.willy.malltest.model.CartItems;
-import com.willy.malltest.model.User;
 import com.willy.malltest.service.CartService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,22 +23,11 @@ public class CartController{
     public ResponseEntity<?> addToCart(@RequestBody AddCartDto addCartDto) {
         System.out.println("Received specId: " + addCartDto.getSpecId());
         System.out.println("Received quantity: " + addCartDto.getQuantity());
-//        System.out.println("Received color: " + addCartDto.getColor());
         CartItems addToCart = cartService.addToCart(addCartDto.getUserId(), addCartDto.getSpecId(), addCartDto.getQuantity());
-        return ResponseEntity.ok(addToCart);
-    }
-    @GetMapping("/check-session")
-    public ResponseEntity<?> checkSession(HttpSession session) {
-        UserDto loggedInUser = (UserDto) session.getAttribute("LoggedInUser");
-        if (loggedInUser == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in.");
-        } else {
-            return ResponseEntity.ok("Session active for user: " + loggedInUser.getUserName());
-        }
+        return ResponseEntity.ok().body(addToCart);
     }
     @GetMapping("/cart")
     public List<CartDto> getCartByUserId(HttpSession session) {
-//        @PathVariable Long userId
         UserDto loggedInUser = (UserDto) session.getAttribute("loggedInUser");
         List<CartDto> cart = cartService.findCartByUserId(loggedInUser.getUserId());
         return cart;
@@ -48,27 +36,23 @@ public class CartController{
     @DeleteMapping("/cart/item/{cartItemId}")
     public ResponseEntity<?> deleteCartItem(@PathVariable Integer cartItemId, HttpSession session) {
         UserDto loggedInUser = (UserDto) session.getAttribute("loggedInUser");
-
         if (loggedInUser == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Please log in!");
         }
-
         try {
             boolean isDeleted = cartService.deleteCartItem(cartItemId);
             if (isDeleted) {
                 return ResponseEntity.ok().body("deleted successfully");
             } else {
-                // Log the error or handle the case where deletion was unsuccessful
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("delete failed");
             }
         } catch (Exception e) {
-            // Log the exception details
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("server error");
         }
     }
     @PutMapping("/cart/{cartItemId}")
     public ResponseEntity<String> updateCartItemQuantity(@PathVariable Integer cartItemId, @RequestBody CartDto cartDto) {
-        cartDto.setCartItemId(cartItemId); // 确保DTO中的cartItemId正确设置
+        cartDto.setCartItemId(cartItemId);
         cartService.updateCartItemQuantity(cartDto);
         return ResponseEntity.ok("Cart item quantity updated successfully.");
     }

@@ -4,17 +4,15 @@ package com.willy.malltest.controller;
 import com.willy.malltest.dto.CustomerFeedbackDTO;
 import com.willy.malltest.dto.ShowCustomerFeedbackDTO;
 import com.willy.malltest.service.CustomerFeedback;
-import com.willy.malltest.service.MailServiceImpl;
+import com.willy.malltest.service.impl.MailServiceImpl;
 import com.willy.malltest.service.UserService;
 import com.willy.malltest.utils.EmailService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.Map;
 
 @RestController
 @CrossOrigin(allowCredentials = "true", origins = { "http://localhost:5173","http://localhost:3000" })
