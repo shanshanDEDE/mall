@@ -95,7 +95,6 @@ public class ProductController {
     @PutMapping("/products/updateProduct/{productId}")
     public Product updateProduct(@PathVariable String productId, @RequestBody Product updatedProduct) {
         System.out.println(productId);
-        // 不需要转换为字符串
         Product existingProduct = productService.findProductByProductId(productId);
         System.out.println(existingProduct);
         System.out.println("-------------------------------------------------");
@@ -128,20 +127,16 @@ public class ProductController {
 
     @GetMapping("/products/findProductByProductId1")
     public Product findProductByProductId1(@RequestParam String productId) {
-        // 首先确认传递给 findProductByProductId 方法的 productId 值是否正确
-        System.out.println("传递的 productId 值为：" + productId);
 
-        // 调用 productService 中的 findProductByProductId 方法来查找产品
+        System.out.println("傳遞的 productId 值為：" + productId);
+
         Product existingProduct = productService.findProductByProductId(productId);
 
-        // 查看返回的产品对象是否为空
         if (existingProduct != null) {
             System.out.println("找到匹配的产品：" + existingProduct);
         } else {
             System.out.println("未找到匹配的产品");
         }
-
-        // 返回产品对象
         return existingProduct;
     }
 
@@ -165,10 +160,6 @@ public class ProductController {
 
         return productService.findProductPhotoById(id)	;
     }
-//    @GetMapping("/products/getProductByCategoryId")
-//    public List<Product> getProductByCategoryId(@RequestParam String categoryId) {
-//        return productService.getProductByCategoryId(categoryId);
-//    }
 
     @GetMapping("/products/findProductsByCategoryId")   //搜尋不同category的商品用DTO
     public Page<ProductDto> findProductsByCategoryId(@RequestParam String categoryId, @RequestParam Integer pageNumber) {

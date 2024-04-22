@@ -10,6 +10,13 @@ import lombok.Setter;
 @Table(name = "cart_items")
 public class CartItems {
 
+    public CartItems() {
+        super();
+    }
+    public CartItems(Integer cartItemId){
+        this.cartItemId=cartItemId;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_item_id")

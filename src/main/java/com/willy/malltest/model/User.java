@@ -22,7 +22,6 @@ public class User {
         this.userId=userId;
     }
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")

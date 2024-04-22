@@ -1,4 +1,4 @@
-package com.willy.malltest.service;
+package com.willy.malltest.service.impl;
 
 import com.willy.malltest.dto.UserDto;
 import com.willy.malltest.model.ThirdParty;
