@@ -4,6 +4,7 @@ package com.willy.malltest.controller;
 import com.willy.malltest.dto.UserDto;
 import com.willy.malltest.model.User;
 import com.willy.malltest.service.MailService;
+import com.willy.malltest.service.SessionService;
 import com.willy.malltest.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class UserController {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private SessionService sessionService;
+
 
     @PostMapping("/user/login")
     public UserDto login(
@@ -37,6 +41,7 @@ public class UserController {
         if(result != null) {
             userService.updateLastloginTime(result.getUserId());
             session.setAttribute("loggedInUser", result);
+            sessionService.saveSession("loggedInUser",result);
         }else {
             throw new RuntimeException("登入失敗，帳號或密碼錯誤");
         }
@@ -47,6 +52,7 @@ public class UserController {
     @GetMapping("/user/logout")
     public boolean logout(HttpSession session) {
         session.invalidate();
+        sessionService.deleteSession("loggedInUser");
         return true;
     }
 
@@ -79,10 +85,11 @@ public class UserController {
         }
     }
     @GetMapping("/user/check")
-    public boolean checkLogin(HttpSession session) {
-        UserDto loggedInUser = (UserDto) session.getAttribute("loggedInUser");
-
-        return !Objects.isNull(loggedInUser);
+    public UserDto checkLogin(HttpSession session) {
+        //UserDto loggedInUser = (UserDto) session.getAttribute("loggedInUser");
+        UserDto loggedInUser = sessionService.getSession("loggedInUser");
+        //System.out.println("loggedInUser："+loggedInUser);
+        return loggedInUser;
     }
 
     @GetMapping("/user/getSession")
