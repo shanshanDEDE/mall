@@ -63,9 +63,9 @@ public class CartServiceImpl implements CartService {
             List<ProductPhoto> productPhotos= productPhotoRepository.findByProductSpec(productSpec);
             if (productPhotos != null && productPhotos.size() != 0) {
                  ProductPhoto productPhoto = productPhotos.get(0);
-                String photoBase64 = Base64.getEncoder().encodeToString(productPhoto.getPhotoFile());
+//                String photoBase64 = Base64.getEncoder().encodeToString(productPhoto.getPhotoFile());
                  cartDto.setProductPhotoId(productPhoto.getPhotoId());
-                 cartDto.setPhotoFile(photoBase64);
+                 cartDto.setPhotoFile(productPhoto.getPhotoFile());
             }
             cartDtos.add(cartDto);
         }

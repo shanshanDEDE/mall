@@ -41,11 +41,7 @@ public class CartController{
         }
         try {
             boolean isDeleted = cartService.deleteCartItem(cartItemId);
-            if (isDeleted) {
-                return ResponseEntity.ok().body("deleted successfully");
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("delete failed");
-            }
+            return ResponseEntity.ok().body("deleted successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("server error");
         }
