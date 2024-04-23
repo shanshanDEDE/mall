@@ -1,4 +1,4 @@
-package controller;
+package com.willy.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.willy.malltest.MalltestApplication;
