@@ -9,6 +9,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,8 +63,9 @@ public class CartServiceImpl implements CartService {
             List<ProductPhoto> productPhotos= productPhotoRepository.findByProductSpec(productSpec);
             if (productPhotos != null && productPhotos.size() != 0) {
                  ProductPhoto productPhoto = productPhotos.get(0);
+                String photoBase64 = Base64.getEncoder().encodeToString(productPhoto.getPhotoFile());
                  cartDto.setProductPhotoId(productPhoto.getPhotoId());
-                 cartDto.setPhotoFile(productPhoto.getPhotoFile());
+                 cartDto.setPhotoFile(photoBase64);
             }
             cartDtos.add(cartDto);
         }
