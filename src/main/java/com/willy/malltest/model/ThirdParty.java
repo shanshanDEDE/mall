@@ -15,9 +15,7 @@ public class ThirdParty {
     private String providerName;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY) // 指定多对一关系
-    @JoinColumn(name = "user_id") // 指定关联的外键列
-    private User user; // 指向 User 类的引用
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

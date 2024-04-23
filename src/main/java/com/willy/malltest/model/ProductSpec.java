@@ -61,13 +61,4 @@ public class ProductSpec {
     @JoinColumn(name = "product_id")
     private Product product;
 
-//    //test
-//    @OneToMany(mappedBy = "productSpec",fetch = FetchType.LAZY)
-//    @JsonIgnore
-//    private List<Track> track;
-
-//    //test
-//    @OneToMany(mappedBy = "productPhotoSpec",fetch = FetchType.LAZY)
-//    @JsonIgnore
-//    private List<ProductPhoto> productPhoto;
 }

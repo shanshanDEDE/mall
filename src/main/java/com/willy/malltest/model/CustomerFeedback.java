@@ -28,9 +28,6 @@ public class CustomerFeedback {
     @Column(name = "description")
     private String description;
 
-//    @Column(name = "FeedbackDate")
-//    private Date feedbackDate;
-
     @Column(name = "customer_feedback_status")
     private String customerFeedbackStatus;
 
@@ -46,17 +43,17 @@ public class CustomerFeedback {
         }
     }
 
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "order_id")
     @JsonIgnore
     private Orders orders;
 
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "orders_detail_id")
     @JsonIgnore
     private OrdersDetail ordersDetails;

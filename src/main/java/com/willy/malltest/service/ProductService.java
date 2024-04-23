@@ -15,30 +15,23 @@ import java.util.List;
 @Service
 public interface ProductService {
 
-
-
-
    List<Product> getAllProducts() ;
 
-    //
    List<Product> getProductByCategoryId(String categoryId) ;
 
    Product findProductById(String productId) ;
 
    Product insertProduct(Product product,String categoryId) ;
 
-
    Product findProductByProductId(String productId);
 
    void saveProduct(Product product) ;
 
-
    List<ProductSpec> findProductSpecByProductId(String productId);
     // 根據頁碼搜尋商品和二次封裝
    Page<ProductDto> findProductByPage(Integer pageNumber) ;
-//模糊查詢產品名稱 用DTO封裝
+    //模糊查詢產品名稱 用DTO封裝
    Page<ProductDto> findFilterProductByPage(Integer pageNumber, String productName) ;
-
 
     // 根據圖片ID搜尋商品圖片
    byte[] findProductPhotoById(Integer id) ;

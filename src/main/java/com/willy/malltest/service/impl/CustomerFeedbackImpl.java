@@ -198,35 +198,6 @@ public class CustomerFeedbackImpl implements CustomerFeedback {
         return customerFeedbackRepository.save(existingcustomerFeedback); // 保存到資料庫中
     }
 
-
-//
-//
-//    @Transactional
-//    public com.willy.malltest.model.CustomerFeedback updateCustomerFeedbacksStatus(CustomerFeedbackDTO customerFeedbackDTO){
-//        com.willy.malltest.model.CustomerFeedback existingcustomerFeedback = customerFeedbackRepository.findById(customerFeedbackDTO.getFeedbackID()).orElse(null);
-//
-//        if (existingcustomerFeedback == null) {
-//            System.out.println("existingcustomerFeedback不存在");
-//            return null;
-//        }
-//        existingcustomerFeedback.setCustomerFeedbackStatus("已結案");
-//
-//        return customerFeedbackRepository.save(existingcustomerFeedback); // 保存到資料庫中
-//
-//    }
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public void deleteCustomerFeedback(CustomerFeedbackDTO customerFeedbackDTO) {
 
