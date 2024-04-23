@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(allowCredentials = "true", origins = { "http://localhost:5173","http://localhost:3000" })
+@CrossOrigin(allowCredentials = "true", origins = {"http://localhost:5173", "http://localhost:3000"})
 
 public class TrackController {
 
@@ -19,44 +19,39 @@ public class TrackController {
     private TrackService trackService;
 
     @GetMapping("/track")
-    public List<TrackDTO> getAllTrack(){
+    public List<TrackDTO> getAllTrack() {
         return trackService.getAllTrackDTOs();
     }
 
     @GetMapping("/getshow/track")
-    public List<TrackShowDTO> getShowTrackDTOs(@RequestParam Long userId){
+    public List<TrackShowDTO> getShowTrackDTOs(@RequestParam Long userId) {
         return trackService.getShowTrackDTOs(userId);
     }
-//    @GetMapping("/check/track")
-//    public boolean getShowTrackDTOs(@RequestParam Long userId,@RequestParam String specId){
-//        return trackService.getCheckTrackDTO(userId,specId);
-//    }
 
     @PostMapping("/check/track")
-    public boolean getShowTrackDTOs(@RequestBody TrackDeDTO trackDeDTO){
+    public boolean getShowTrackDTOs(@RequestBody TrackDeDTO trackDeDTO) {
         Long userId = trackDeDTO.getUserID();
         List<String> specId = trackDeDTO.getSpecID();
-        return trackService.getCheckTrackDTO(userId,specId);
+        return trackService.getCheckTrackDTO(userId, specId);
     }
 
     @PostMapping("/create/track")
-    public boolean creatTrack(@RequestBody TrackDeDTO trackDeDTO){
+    public boolean creatTrack(@RequestBody TrackDeDTO trackDeDTO) {
         Long userId = trackDeDTO.getUserID();
         List<String> specId = trackDeDTO.getSpecID();
         String specID = specId.get(0);
-
-        return trackService.addTrack(specID,userId);
+        return trackService.addTrack(specID, userId);
     }
 
     @DeleteMapping("/delete/track")
-    public void deleteTrack(@RequestBody TrackDTO trackDTO){
+    public void deleteTrack(@RequestBody TrackDTO trackDTO) {
         Long userId = trackDTO.getUserID();
         String specID = trackDTO.getSpecID();
-        trackService.deleteTrack(specID,userId);
+        trackService.deleteTrack(specID, userId);
     }
 
     @DeleteMapping("/Dedelete/track")
-    public void DedeleteTrack(@RequestBody TrackDeDTO trackDeDTO){
+    public void DedeleteTrack(@RequestBody TrackDeDTO trackDeDTO) {
         System.out.println(trackDeDTO);
         Long userId = trackDeDTO.getUserID();
         List<String> specId = trackDeDTO.getSpecID();
@@ -64,6 +59,6 @@ public class TrackController {
         String specID = specId.get(0);
         System.out.println(userId);
         System.out.println(specID);
-        trackService.deleteTrack(specID,userId);
+        trackService.deleteTrack(specID, userId);
     }
 }

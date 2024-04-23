@@ -206,8 +206,8 @@ public class ProductServiceImpl implements ProductService {
             productPhoto.setProductSpec(productSpecRepository.findProductSpecBySpecId(specId));
             productPhotoRepository.save(productPhoto);
         } catch (IOException e) {
-            e.printStackTrace(); // 您可能希望適當地記錄例外情況或根據應用程式的需要進行處理
-            return "error"; // 假設 "error" 是表示發生錯誤的邏輯視圖名稱
+            e.printStackTrace();
+            return "error";
         }
 
         return "success insert photo";
@@ -250,7 +250,7 @@ public class ProductServiceImpl implements ProductService {
         return products.map(p -> {
             ProductDto pt = new ProductDto();
             BeanUtils.copyProperties(p, pt);
-            List<ProductSpec> productSpecs = p.getProductSpecs();    //加入productSpec
+            List<ProductSpec> productSpecs = p.getProductSpecs();
             if (productSpecs != null && !productSpecs.isEmpty()) {
                 List<String> specIds = new ArrayList<>();
                 productSpecs.forEach(spec -> specIds.add(spec.getSpecId()));
@@ -307,7 +307,6 @@ public class ProductServiceImpl implements ProductService {
         List<Product> filteredProducts = new ArrayList<>();
 
         for (Product product : products) {
-//            && product.getSalesStatus() == 1
             if (product.getSalesStatus() != null) {
                 filteredProducts.add(product);
             }

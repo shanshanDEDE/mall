@@ -44,9 +44,9 @@ public class OrdersManagementServiceImpl implements OrdersManagementService {
     @Override
     public List<OrdersDetailDTO> findOrdersDetailDTOs() {
         List<OrdersDetail> ordersDetails = ordersDetailRepository.findAll();
-        List<OrdersDetailDTO> ordersDetailDTOs = new ArrayList<>();//初始化空的OrdersDetailDTO集合
+        List<OrdersDetailDTO> ordersDetailDTOs = new ArrayList<>();
 
-        for (OrdersDetail od : ordersDetails) { //遍歷每個OrdersDetail對象
+        for (OrdersDetail od : ordersDetails) {
             OrdersDetailDTO oddto = new OrdersDetailDTO();
             BeanUtils.copyProperties(od, oddto);
             BeanUtils.copyProperties(od.getOrders(), oddto);

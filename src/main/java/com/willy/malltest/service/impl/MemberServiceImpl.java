@@ -25,8 +25,8 @@ public class MemberServiceImpl implements MemberService {
     @Transactional(readOnly = true)
     public List<MemberReDataDTO> getAllMemberReDTOs() {
         List<User> Users = memberRepository.findAll();
-        List<MemberReDataDTO> memberReDataDTO = new ArrayList<>(); // 初始化空的 TrackDTO 列表
-        for (User user : Users) { // 使用 for-each 迴圈遍歷 List 中的每個 Track 對象
+        List<MemberReDataDTO> memberReDataDTO = new ArrayList<>();
+        for (User user : Users) {
             MemberReDataDTO dto = new MemberReDataDTO();
 
             dto.setUserID(user.getUserId());
@@ -37,17 +37,14 @@ public class MemberServiceImpl implements MemberService {
             dto.setDeliverAddress(user.getDeliverAddress());
             dto.setRegisterDate(user.getRegisterDate());
 
-            memberReDataDTO.add(dto); // 將轉換後的 TrackDTO 加入到列表中
+            memberReDataDTO.add(dto);
         }
         return memberReDataDTO;
     }
 
     @Transactional
     public MemberReDataDTO getShowMemberReDTOs(Long userId) {
-
-        // 根據 userId 查找相應的 User 實體並設置給新 Track 對象
         User user = memberRepository.findById(userId).orElse(null);
-
         MemberReDataDTO dto = new MemberReDataDTO();
         dto.setUserID(user.getUserId());
         dto.setUserName(user.getUserName());
@@ -61,10 +58,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Transactional
     public MemberRePasswordDTO getShowpassworddata(Long userId) {
-
-        // 根據 userId 查找相應的 User 實體並設置給新 Track 對象
         User user = memberRepository.findById(userId).orElse(null);
-
         MemberRePasswordDTO dto = new MemberRePasswordDTO();
         dto.setUserID(user.getUserId());
         dto.setUserName(user.getUserName());
@@ -82,12 +76,9 @@ public class MemberServiceImpl implements MemberService {
             return null;
         }
         existingUser.setPassword(memberRePasswordDTO.getPassword());
-
-        String encodedPwd = pwdEncoder.encode(existingUser.getPassword()); // 加密
-
+        String encodedPwd = pwdEncoder.encode(existingUser.getPassword());
         existingUser.setPassword(encodedPwd);
-
-        return memberRepository.save(existingUser); // 保存到資料庫中
+        return memberRepository.save(existingUser);
     }
 
     @Transactional
@@ -132,6 +123,6 @@ public class MemberServiceImpl implements MemberService {
         if(memberReDataDTO.getRegisterDate()!=null){
             existingUser.setRegisterDate(memberReDataDTO.getRegisterDate());
         }
-        return memberRepository.save(existingUser); // 保存到資料庫中
+        return memberRepository.save(existingUser);
     }
 }

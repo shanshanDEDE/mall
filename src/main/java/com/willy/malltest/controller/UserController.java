@@ -29,15 +29,12 @@ public class UserController {
     @Autowired
     private SessionService sessionService;
 
-
     @PostMapping("/user/login")
     public UserDto login(
             @RequestParam("email") String email,
             @RequestParam("password") String password,
             HttpSession session) {
-
         UserDto result = userService.login(email, password);
-
         if(result != null) {
             userService.updateLastloginTime(result.getUserId());
             session.setAttribute("loggedInUser", result);
@@ -45,7 +42,6 @@ public class UserController {
         }else {
             throw new RuntimeException("登入失敗，帳號或密碼錯誤");
         }
-
         return result;
     }
 
@@ -62,12 +58,9 @@ public class UserController {
             @RequestParam("email") String email,
             @RequestParam("phone") String phone,
             @RequestParam("password") String password){
-
         boolean isExist = userService.checkIfUsernameExist(email);
-
         if(isExist) {
             throw new RuntimeException("此帳號已註冊");
-
         }else {
             User newUsers = new User();
             newUsers.setUserName(username);
@@ -86,15 +79,12 @@ public class UserController {
     }
     @GetMapping("/user/check")
     public UserDto checkLogin(HttpSession session) {
-        //UserDto loggedInUser = (UserDto) session.getAttribute("loggedInUser");
         UserDto loggedInUser = sessionService.getSession("loggedInUser");
-        //System.out.println("loggedInUser："+loggedInUser);
         return loggedInUser;
     }
 
     @GetMapping("/user/getSession")
     public UserDto getSession(HttpSession session) {
-
         return (UserDto) session.getAttribute("loggedInUser");
     }
 
@@ -102,23 +92,18 @@ public class UserController {
     public void sendPassword(@RequestParam("email") String email,
                              @RequestParam("phone") String phone) {
         mailService.sendPassword(email, phone);
-
     }
 
     @PostMapping("/user/mail/verify")
     public void sendVerifyCode(@RequestParam("email") String email,
                                @RequestParam("verificationCode") String verificationCode) {
-
         mailService.sendVerifyCode(email, verificationCode);
     }
     @PostMapping("/user/registerAdmin")
     public User registerAdmin(@RequestParam("name") String username, @RequestParam("email") String email, @RequestParam("phone") String phone, @RequestParam("password") String password) {
-
         boolean isExist = userService.checkIfUsernameExist(email);
-
         if (isExist) {
             throw new RuntimeException("此管理員已存在");
-
         } else {
             User newUsers = new User();
             newUsers.setUserName(username);
@@ -138,13 +123,11 @@ public class UserController {
 
     @GetMapping("/user/getAllUsers")
     public List<User> getAllUsers() {
-
         return userService.getAllUsers();
     }
 
     @PutMapping("/user/banUser")
     public String banUser(@RequestParam("id") Long id) {
-
         User user= userService.banUser(id);
         return "UserName:"+user.getUserName()+ " success ban!";
     }
@@ -157,13 +140,11 @@ public class UserController {
 
     @DeleteMapping("/user/deleteUser")
     public String deleteUser(@RequestParam("id") Long id) {
-
         return userService.deleteUser(id);
     }
 
     @GetMapping("/user/findNameById")
     public String findNameById(@RequestParam("id") Long id) {
-
         return userService.findNameById(id);
     }
 }
