@@ -23,8 +23,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//@SpringBootTest()
-//@AutoConfigureMockMvc
 @ContextConfiguration(classes = {MalltestApplication.class})
 @WebMvcTest(CartController.class)
 public class CartControllerTest {

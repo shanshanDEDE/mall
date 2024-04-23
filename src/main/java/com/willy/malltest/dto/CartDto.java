@@ -9,7 +9,7 @@ public class CartDto {
     private Integer cartItemId;
     private String specId;
     private Integer productPhotoId;
-    private String photoFile;
+    private byte[] photoFile;
     private String productName;
     private Integer productPrice;
     private Integer quantity;
