@@ -45,7 +45,7 @@ public class ProductSpec {
     private List<CartItems> cartItems = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "productSpec")
+    @OneToMany(mappedBy = "productSpec",cascade = CascadeType.ALL)
     private List<ProductPhoto> productPhotos = new ArrayList<>();
 
     @JsonIgnore
