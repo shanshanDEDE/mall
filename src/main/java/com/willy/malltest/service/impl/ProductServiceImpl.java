@@ -228,7 +228,7 @@ public class ProductServiceImpl implements ProductService {
         productSpec.setDeleted(false);
         productSpec.setProduct(product);
         productSpecRepository.save(productSpec);
-      return productSpec;
+        return productSpec;
     }
 
     @Override
@@ -297,10 +297,17 @@ public class ProductServiceImpl implements ProductService {
     public String updateSpecPhoto(String specId, MultipartFile file) throws IOException {
         ProductSpec productSpec = productSpecRepository.findProductSpecBySpecId(specId);
         List<ProductPhoto> productPhotos = productPhotoRepository.findByProductSpec(productSpec);
-        productPhotos.get(0).setPhotoFile(file.getBytes());
-        productPhotoRepository.save(productPhotos.get(0));
-        return "success update photo";
+
+        // 檢查 productPhotos 列表是否不為空
+        if (!productPhotos.isEmpty()) {
+            productPhotos.get(0).setPhotoFile(file.getBytes());
+            productPhotoRepository.save(productPhotos.get(0));
+            return "success update photo";
+        } else {
+            return "no product photos found";
+        }
     }
+
 
     @Override
     public List<Product> filterCheckProductSalesStatus(List<Product> products) {
